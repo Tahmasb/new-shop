@@ -29,7 +29,7 @@ export default function Checkout(props) {
       address: "",
       phone: "",
       date: "",
-      allPrice: location.state ? location.state.allPrice : 0,
+      allPrice: location.state ? location.state.allprice : 0,
     },
 
     onSubmit: (values) => {

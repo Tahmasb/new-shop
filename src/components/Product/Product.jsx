@@ -33,9 +33,9 @@ export default function Product(props) {
             item
             component={motion.div}
             animate={{ scale: 1 }}
-            initial={{ scale: 0.5 }}
+            initial={{ scale: 0.6 }}
             whileHover={{
-              scale: 1.07,
+              scale: 1.06,
             }}
             p={0.4}
             lg={props.lg}
