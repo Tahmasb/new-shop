@@ -1,0 +1,6 @@
+/* .product-item:hover {
+  transform: scale(1.09);
+} */
+.product-item {
+  transition-duration: 500ms;
+}

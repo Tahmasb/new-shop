@@ -1,0 +1,12 @@
+.icon-parent {
+  display: flex;
+  align-items: center;
+  row-gap: 22px;
+  column-gap: 16px;
+}
+.description {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  background: red;
+}

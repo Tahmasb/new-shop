@@ -1,0 +1,12 @@
+.link-footer {
+  color: var(--darkBlue);
+}
+.parent-icon {
+  padding: 1.2rem;
+  border-radius: 50%;
+  background-color: var(--gray);
+  display: flex;
+}
+.footer-icon {
+  font-size: 1.3rem;
+}

@@ -1,0 +1,20 @@
+li {
+  list-style: none;
+}
+ul {
+  padding: 0px;
+}
+.category-name {
+  color: var(--darkBlue);
+  padding: 9px;
+  display: flex;
+  column-gap: 0.4rem;
+  align-items: center;
+  border-bottom: 1px solid gray;
+}
+.category-item {
+  transition-duration: 700ms;
+}
+.category-item:hover {
+  background-color: rgb(184, 180, 180);
+}

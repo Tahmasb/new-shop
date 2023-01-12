@@ -1,0 +1,9 @@
+.parent-category-title {
+  background-color: var(--lightGray);
+}
+.category-title {
+  font-size: 1.3rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.9rem;
+}
