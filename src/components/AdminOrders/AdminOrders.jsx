@@ -9,7 +9,7 @@ import {
   LinearProgress,
   Typography,
 } from "@mui/material"
-// import styles from "./adminOrders.module.css"
+import styles from "./adminOrders.module.css"
 import { formatCurrency } from "../../utils"
 import { supabase } from "../../CreateClient"
 import { AdminOrderDone } from "./../"

@@ -21,7 +21,7 @@ export default function AdminOrderDone(props) {
       <Grid
         sx={{
           width: { xs: "95%", sm: "90%", md: "70%", lg: "60%" },
-          bgcolor: "#e0f2f1",
+          bgcolor: "lightgray",
           margin: "auto",
           mt: "5rem",
         }}
@@ -85,7 +85,11 @@ export default function AdminOrderDone(props) {
                   key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell
+                    style={{ fontFamily: "vazir" }}
+                    component="th"
+                    scope="row"
+                  >
                     {item.title}
                   </TableCell>
                   <TableCell>{formatCurrency(item.price)}</TableCell>

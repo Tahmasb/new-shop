@@ -13,14 +13,10 @@ const theme = createTheme({
   breakpoints: {
     values: { xs: 0, s: 370, sm: 600, md: 900, lg: 1200, xl: 1536 },
   },
+  typography: {
+    fontFamily: "IRANSansWebFaNum",
+  },
   components: {
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          fontFamily: "IRANSansWebFaNum",
-        },
-      },
-    },
     MuiLink: {
       styleOverrides: {
         root: {
@@ -29,6 +25,13 @@ const theme = createTheme({
         },
       },
     },
+    // MuiTooltip: {
+    //   styleOverrides: {
+    //     tooltip: {
+    //       fontFamily: "IRANSansWebFaNum",
+    //     },
+    //   },
+    // },
   },
 })
 export { theme, cacheRTL }

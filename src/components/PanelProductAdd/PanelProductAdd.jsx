@@ -6,7 +6,7 @@ import {
   Typography,
   Modal,
 } from "@mui/material"
-import { formatCurrency } from "./../../utils"
+import styles from "./panelProductAdd.module.css"
 import { useFormik } from "formik"
 import { supabase } from "../../CreateClient"
 import * as Yup from "yup"

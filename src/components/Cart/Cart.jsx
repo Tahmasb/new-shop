@@ -2,7 +2,7 @@ import { CardMedia, Grid, Typography } from "@mui/material"
 import { useContext, useEffect } from "react"
 import { ProductsContext, CartTemplate } from ".."
 import styles from "./cart.module.css"
-import emptyCart from "./../../assets/img/empty-cart.png"
+// import emptyCart from "./../../assets/img/empty-cart.png"
 import { styled } from "@mui/system"
 import React from "react"
 import {
@@ -77,7 +77,7 @@ export default function Cart() {
           <GridCus>
             <CardMedia
               component="img"
-              src={emptyCart}
+              src="https://s2.uupload.ir/files/empty-cart_4v3w.png"
               style={{ objectFit: "contain", height: "80vh" }}
               alt="empty-cart"
             />

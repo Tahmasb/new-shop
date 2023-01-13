@@ -15,8 +15,11 @@ import { AiOutlineUser } from "react-icons/ai"
 import "./header.css"
 import * as React from "react"
 import ProductsContext from "../../context/ProductContext"
+import { useLocation } from "react-router-dom"
 
 export default function Header() {
+  let location = useLocation()
+  const [inputValue, setInputValue] = React.useState("")
   const [themState, setThemState] = React.useState(true)
   let localStorageCart =
     JSON.parse(window.localStorage.getItem("cart-items")) || []
@@ -33,6 +36,12 @@ export default function Header() {
         .slice(0, 5)
     )
   }
+  React.useEffect(() => {
+    setInputValue("")
+  }, [location.pathname])
+  React.useEffect(() => {
+    searchProduct(inputValue || "$$$")
+  }, [inputValue])
   return (
     <>
       <Grid
@@ -93,8 +102,9 @@ export default function Header() {
         <Grid flex={3}>
           <TextField
             fullWidth
+            value={inputValue}
             onChange={(e) => {
-              searchProduct(e.target.value || "$$$")
+              setInputValue(e.target.value)
             }}
             placeholder="جستجو ..."
             InputProps={{

@@ -31,6 +31,7 @@ export default function Menu(props) {
                           padding: "0.9rem",
                           paddingLeft: "6rem",
                           paddingRight: "1rem",
+                          fontFamily: "vazir",
                         }}
                         to={`/product/${product.categoryId}${product.uniqueId}`}
                       >

@@ -82,13 +82,14 @@ export default function adminProducts() {
     {
       field: "exist",
       headerName: "موجودی",
-      flex: 0.5,
+      flex: 0.6,
       headerAlign: "center",
+      editable: true,
     },
     {
       field: "categoryName",
       headerName: "دسته بندی",
-      flex: 1,
+      flex: 0.9,
       headerAlign: "right",
       cellClassName: "select-cells",
     },
@@ -99,9 +100,21 @@ export default function adminProducts() {
       flex: 0.8,
       headerAlign: "right",
       cellClassName: "select-cells",
+      renderCell: ({ value }) => (
+        <p style={{ fontFamily: "vazir" }} dir="rtl">
+          {value}
+        </p>
+      ),
     },
   ]
-
+  // custom message when get data from api
+  function CustomMessage() {
+    return (
+      <Grid textAlign={"center"} mt={"20%"}>
+        <Typography>در حال دریافت محصولات از سرور</Typography>
+      </Grid>
+    )
+  }
   return (
     <>
       {/* modal add product and delete product */}
@@ -196,6 +209,9 @@ export default function adminProducts() {
             onCellClick={(params) => {
               setDeleteId(params.id)
               setDeleteItem(params.row.title)
+            }}
+            components={{
+              NoRowsOverlay: CustomMessage,
             }}
           />
         </Grid>

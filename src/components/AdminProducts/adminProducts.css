@@ -1,5 +1,6 @@
 .MuiDataGrid-cell--textLeft.select-cells {
   justify-content: flex-end !important;
+  font-family: "test" !important;
 }
 .MuiDataGrid-cell--textLeft.class-price {
   justify-content: flex-end !important;

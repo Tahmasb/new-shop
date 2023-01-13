@@ -14,7 +14,6 @@ import { Link } from "react-router-dom"
 import { formatCurrency } from "./../../utils"
 import "./product.css"
 export default function Product(props) {
-  let pageSize = useMediaQuery("(min-width:300px)")
   let rows = []
   JSON.parse(window.localStorage.getItem("all-products")).map((product) => {
     if (product.categoryName === props.categoryName) rows.push(product)
@@ -24,7 +23,6 @@ export default function Product(props) {
 
   return (
     <>
-      {/* {renderProduct ? <ProductDetails selectProducttt={product} /> : null} */}
       {rows.map((product, index) =>
         index < props.numShow ? (
           <Grid
@@ -33,7 +31,7 @@ export default function Product(props) {
             item
             component={motion.div}
             animate={{ scale: 1 }}
-            initial={{ scale: 0.6 }}
+            initial={{ scale: 0.7 }}
             whileHover={{
               scale: 1.06,
             }}
@@ -48,7 +46,7 @@ export default function Product(props) {
               <Link to={`/product/${product.categoryId}${product.uniqueId}`}>
                 <CardMedia
                   src={product.img}
-                  style={{ objectFit: "contain" }}
+                  sx={{ objectFit: "contain", paddingBottom: "8px" }}
                   component="img"
                   alt="dish"
                 />
@@ -65,7 +63,7 @@ export default function Product(props) {
                 >
                   <Grid display="flex" justifyContent={"space-between"}>
                     <Link to={`/product/${product.uniqueId}`}>
-                      <Typography variant={pageSize ? "body1" : "body2"}>
+                      <Typography sx={{ fontFamily: "vazir" }} variant="body2">
                         {product.title}
                       </Typography>
                     </Link>
