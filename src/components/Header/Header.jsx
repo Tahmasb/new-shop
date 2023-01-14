@@ -66,7 +66,7 @@ export default function Header() {
           justifyContent={"space-evenly"}
           alignItems="center"
           display={"flex"}
-          sx={{ flex: { lg: 0.6, md: 0.9 } }}
+          sx={{ flex: { lg: 0.7, md: 0.9 } }}
         >
           <Tooltip title="برو صفحه اصلی">
             <Link
@@ -93,7 +93,7 @@ export default function Header() {
                     "lightgray"
                   )
             }}
-            sx={{ display: { xs: "none", md: "flex" } }}
+            sx={{ display: { xs: "none", md: "flex", width: "65%" } }}
             variant="h6"
           >
             فروشگاه لورم
