@@ -69,12 +69,6 @@ export default function Product(props) {
                     </Link>
                     <Typography variant="body2">
                       {`${formatCurrency(product.price)} `}
-                      <Typography
-                        sx={{ display: { xs: "none", sm: "inline" } }}
-                        variant="caption"
-                      >
-                        تومان
-                      </Typography>
                     </Typography>
                   </Grid>
                   <Grid mt={2} display="flex" justifyContent="space-between">
