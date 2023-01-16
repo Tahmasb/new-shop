@@ -19,13 +19,12 @@ export default function CartTemplate(props) {
       <Grid
         display="flex"
         p={0.5}
-        boxShadow={3}
         justifyContent={"space-between"}
         sx={{
           flexDirection: { xs: "column", s: "row" },
           width: { xs: "100%", sm: "80%", md: "100%" },
         }}
-        style={{ background: "#eeeeee" }}
+        style={{ background: "white" }}
       >
         <Link
           to={`/product/${props.cartItem.categoryId}${props.cartItem.uniqueId}`}

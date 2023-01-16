@@ -178,10 +178,12 @@ export default function ProductDetails() {
           justifyContent="center"
         >
           <Grid mt={1.9} mx={0.9} display="flex" justifyContent="space-between">
-            <Typography>{selectProduct.title}</Typography>
+            <Typography style={{ fontFamily: "vazir" }}>
+              {selectProduct.title}{" "}
+            </Typography>
             <Typography>{formatCurrency(selectProduct.price)}</Typography>
           </Grid>
-          <Typography mx={0.2} textAlign={"justify"}>
+          <Typography textAlign={"justify"}>
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
             استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در
             ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنای زیادی در شصت و

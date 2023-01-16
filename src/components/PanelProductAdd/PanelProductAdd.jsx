@@ -31,8 +31,8 @@ export default function AdminProducts(props) {
         props.fetchProducts()
         resetForm()
       }
-      alert(JSON.stringify(values))
-      // addProduct()
+      // alert(JSON.stringify(values))
+      addProduct()
     },
     validationSchema: Yup.object({
       img: Yup.string().min(3, "لینک اشتباهه").required("ضروری"),

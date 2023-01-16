@@ -156,32 +156,32 @@ export default function adminProducts() {
         </Grid>
       </Modal>
 
+      {/* header component */}
+
+      <Grid
+        sx={{ mx: { xs: "3%", md: "10%", lg: "15%" } }}
+        display="flex"
+        justifyContent={"space-between"}
+        alignItems="center"
+        mt={"10px"}
+      >
+        <Typography>مدیریت کالاها</Typography>
+        <Button
+          onClick={() => setModalAddProduct(true)}
+          variant="contained"
+          color="success"
+        >
+          افزودن کالا
+        </Button>
+      </Grid>
+
       <div
         style={{
           width: "100%",
-          marginTop: "20px",
+          marginTop: "5px",
           overflowX: "auto",
         }}
       >
-        {/* header component */}
-
-        <Grid
-          sx={{ mx: { xs: "3%", md: "10%", lg: "17%" } }}
-          display="flex"
-          justifyContent={"space-between"}
-          alignItems="center"
-          className="test-for-overflow"
-        >
-          <Typography>مدیریت کالاها</Typography>
-          <Button
-            onClick={() => setModalAddProduct(true)}
-            variant="contained"
-            color="success"
-          >
-            افزودن کالا
-          </Button>
-        </Grid>
-
         {/* data-grid */}
         <Grid
           height="100vh"
@@ -189,7 +189,6 @@ export default function adminProducts() {
           margin="auto"
           sx={{
             width: { xs: "114%", sm: "100%", md: "80%", lg: "70%" },
-            overflowX: "scroll",
           }}
         >
           <DataGrid

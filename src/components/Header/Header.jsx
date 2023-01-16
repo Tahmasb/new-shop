@@ -93,7 +93,7 @@ export default function Header() {
                     "lightgray"
                   )
             }}
-            sx={{ display: { xs: "none", md: "flex", width: "65%" } }}
+            sx={{ display: { xs: "none", md: "flex", width: "59%" } }}
             variant="h6"
           >
             فروشگاه لورم

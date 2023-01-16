@@ -20,12 +20,11 @@ const GridCus = styled(Grid)`
   row-gap: 0.7rem;
 `
 const TypographyCus = styled(Typography)`
-  text-align: center;
-  margin-top: 1.7rem;
+  margin-top: 1.5rem;
   margin-bottom: 1.7rem;
   padding: 1rem;
-  background-color: #80cbc4;
-  border-radius: 1rem;
+  background-color: white;
+  text-align: center;
 `
 export default function Cart() {
   const [accessCheckOut] = React.useState(true)
@@ -47,10 +46,17 @@ export default function Cart() {
         pb={0}
         sx={{
           flexDirection: { xs: "column", md: "row" },
+          bgcolor: "#f5f5f5",
         }}
       >
         {(context.cartItems.length || 0) > 0 ? (
-          <GridCus minHeight={"74vh"} pb={3} px={1} sx={{ bgcolor: "#fafafa" }}>
+          <GridCus
+            minHeight={"74vh"}
+            pb={3}
+            px={1}
+            borderBottom={1}
+            borderColor="lightgray"
+          >
             <TypographyCus>
               تعداد محصولات سبد خرید: {context.cartItems.length}
             </TypographyCus>
@@ -83,7 +89,7 @@ export default function Cart() {
             />
           </GridCus>
         )}
-        <GridCus px={1} sx={{ bgcolor: "#f5f5f5" }}>
+        <GridCus px={1}>
           {numFavoriteItems ? (
             <GridCus>
               <TypographyCus>
@@ -106,12 +112,7 @@ export default function Cart() {
               flexDirection={"column"}
             >
               <TypographyCus width={180}>لیست مورد علاقت خالیه</TypographyCus>
-              <TypographyCus
-                variant="caption"
-                sx={{
-                  bgcolor: "#e0f2f1",
-                }}
-              >
+              <TypographyCus sx={{ bgcolor: "#f5f5f5" }} variant="caption">
                 میتونی محصولاتی که دوست داری رو از صفحه اون محصول به اینجا اضافه
                 کنی
               </TypographyCus>
@@ -137,12 +138,7 @@ export default function Cart() {
               flexDirection={"column"}
             >
               <TypographyCus width={180}>سبد خرید بعدیت خالیه</TypographyCus>
-              <TypographyCus
-                variant="caption"
-                sx={{
-                  bgcolor: "#e0f2f1",
-                }}
-              >
+              <TypographyCus sx={{ bgcolor: "#f5f5f5" }} variant="caption">
                 میتونی محصولاتی که بعدا میخای بخری از صفحه اون محصول به اینجا
                 اضافه کنی
               </TypographyCus>

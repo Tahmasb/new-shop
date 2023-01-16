@@ -44,12 +44,14 @@ export default function Product(props) {
           >
             <Card>
               <Link to={`/product/${product.categoryId}${product.uniqueId}`}>
-                <CardMedia
-                  src={product.img}
-                  sx={{ objectFit: "contain", paddingBottom: "8px" }}
-                  component="img"
-                  alt="dish"
-                />
+                <Grid p={1.2}>
+                  <CardMedia
+                    src={product.img}
+                    sx={{ objectFit: "contain" }}
+                    component="img"
+                    alt="dish"
+                  />
+                </Grid>
               </Link>
               <CardContent
                 sx={{

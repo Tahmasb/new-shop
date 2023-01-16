@@ -2,13 +2,9 @@
   justify-content: flex-end !important;
   font-family: "test" !important;
 }
-.MuiDataGrid-cell--textLeft.class-price {
-  justify-content: flex-end !important;
-}
-.muirtl-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell--textRight {
+.MuiDataGrid-cell--textRight.class-price {
   justify-content: center !important;
 }
-
 .MuiDataGrid-cell--textLeft {
   justify-content: center !important;
 }
@@ -21,6 +17,4 @@
 }
 .MuiDataGrid-cellContent {
   direction: rtl !important;
-  /* font-family: "Courier New", Courier, monospace !important; */
 }
-/* کاری کن که فقط کالمن نامها فونت عددش وزیر نباشه یه کلاس به کالمن اضافه کن و با سلکتور انتخابش کن و بهش فونت دلخواه بدهو ایمپوتنت بده */
