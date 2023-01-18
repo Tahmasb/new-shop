@@ -16,9 +16,12 @@ export default function Categorys() {
     let { data } = await supabase.from("products").select("*")
     let { data: categorys } = await supabase.from("categorys").select("*")
     context.setProducts(data)
-    setCategorys(categorys)
-    window.localStorage.setItem("all-products", JSON.stringify(data))
-    window.localStorage.setItem("all-categorys", JSON.stringify(categorys))
+    setCategorys(categorys || [])
+    window.localStorage.setItem("all-products", JSON.stringify(data || []))
+    window.localStorage.setItem(
+      "all-categorys",
+      JSON.stringify(categorys || [])
+    )
     setSkeleton(false)
   }
 

@@ -8,6 +8,7 @@
   background-color: var(--lightGray);
   padding: 4px;
   border-radius: 4px;
+  white-space: nowrap;
 }
 /* p {
   font-family: "test" !important;

@@ -38,13 +38,20 @@ export default function AdminProducts(props) {
       img: Yup.string().min(3, "لینک اشتباهه").required("ضروری"),
       title: Yup.string().min(3, "حداقل سه کاراکتر").required("ضروری"),
       categoryName: Yup.string().required("ضروری"),
-      categoryId: Yup.string().required("ضروری"),
       exist: Yup.number().min(1, "بیشتر از صفر باشه").required("ضروری"),
       price: Yup.number("لطفا عدد وارد")
         .min(1, "بیشتر از صفر باشه")
         .required("ضروری"),
     }),
   })
+
+  React.useEffect(() => {
+    let test = itemValue.filter(
+      (item) => item.categoryName === formik.values.categoryName
+    )[0] || { categoryId: "" }
+    formik.setFieldValue("categoryId", test.categoryId)
+  }, [formik.values.categoryName])
+
   return (
     <>
       <Modal open={props.openModal} onClose={() => props.setOpenModal(false)}>
@@ -67,7 +74,9 @@ export default function AdminProducts(props) {
               size="small"
             />
             {formik.touched.img && formik.errors.img ? (
-              <Typography variant="caption">{formik.errors.img}</Typography>
+              <Typography color={"red"} variant="caption">
+                {formik.errors.img}
+              </Typography>
             ) : null}
           </Grid>
           <Grid>
@@ -80,7 +89,9 @@ export default function AdminProducts(props) {
               fullWidth
             />
             {formik.touched.title && formik.errors.title ? (
-              <Typography variant="caption">{formik.errors.title}</Typography>
+              <Typography color={"red"} variant="caption">
+                {formik.errors.title}
+              </Typography>
             ) : null}
           </Grid>
           <Grid>
@@ -101,34 +112,13 @@ export default function AdminProducts(props) {
               ))}
             </TextField>
             {formik.touched.categoryName && formik.errors.categoryName ? (
-              <Typography variant="caption">
+              <Typography color={"red"} variant="caption">
                 {formik.errors.categoryName}
               </Typography>
             ) : null}
           </Grid>
 
           <Grid>
-            <TextField
-              {...formik.getFieldProps("categoryId")}
-              type="text"
-              sx={{ mt: 3 }}
-              fullWidth
-              defaultValue={""}
-              label="آیدی دسته بندی"
-              select
-              size="small"
-            >
-              {itemValue.map((item) => (
-                <MenuItem key={item.categoryId} value={item.categoryId}>
-                  {item.categoryId}
-                </MenuItem>
-              ))}
-            </TextField>
-            {formik.touched.categoryId && formik.errors.categoryId ? (
-              <Typography variant="caption">
-                {formik.errors.categoryId}
-              </Typography>
-            ) : null}
             <Grid>
               <TextField
                 {...formik.getFieldProps("exist")}
@@ -139,7 +129,9 @@ export default function AdminProducts(props) {
                 size="small"
               />
               {formik.touched.exist && formik.errors.exist ? (
-                <Typography variant="caption">{formik.errors.exist}</Typography>
+                <Typography color={"red"} variant="caption">
+                  {formik.errors.exist}
+                </Typography>
               ) : null}
             </Grid>
             <>
@@ -160,7 +152,9 @@ export default function AdminProducts(props) {
                 size="small"
               />{" "}
               {formik.touched.price && formik.errors.price ? (
-                <Typography variant="caption">{formik.errors.price}</Typography>
+                <Typography color={"red"} variant="caption">
+                  {formik.errors.price}
+                </Typography>
               ) : null}
             </>
           </Grid>

@@ -23,13 +23,15 @@ export default function Header() {
   const [themState, setThemState] = React.useState(true)
   let localStorageCart =
     JSON.parse(window.localStorage.getItem("cart-items")) || []
+  let localStorageProducts =
+    JSON.parse(window.localStorage.getItem("all-products")) || []
   const context = React.useContext(ProductsContext)
   let [loginModal, setLoginModal] = React.useState(false)
   const [searchResult2, setSearchResult2] = React.useState([])
 
   const searchProduct = (e) => {
     setSearchResult2(
-      JSON.parse(window.localStorage.getItem("all-products"))
+      localStorageProducts
         .filter((product) => {
           return product.title.includes(e)
         })
@@ -119,7 +121,7 @@ export default function Header() {
         <Grid
           display="flex"
           sx={{
-            flex: { md: 0.7, xs: 1.2 },
+            flex: { md: 0.7, sm: 1, xs: 1.3 },
             justifyContent: { xs: "space-around", sm: "space-around" },
           }}
         >

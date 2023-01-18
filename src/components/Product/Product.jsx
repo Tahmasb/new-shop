@@ -49,7 +49,7 @@ export default function Product(props) {
                     src={product.img}
                     sx={{ objectFit: "contain" }}
                     component="img"
-                    alt="dish"
+                    alt="product image"
                   />
                 </Grid>
               </Link>

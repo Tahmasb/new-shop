@@ -129,6 +129,8 @@ export default function Checkout(props) {
               <Typography mb={1.5}>تاریخ تحویل</Typography>
               <Grid>
                 <DatePicker
+                  editable={false}
+                  placeholder="انتخاب تاریخ تحویل"
                   name="date"
                   containerStyle={{ width: "100%" }}
                   style={{
@@ -138,9 +140,10 @@ export default function Checkout(props) {
                     textAlign: "center",
                   }}
                   onChange={(newValue) => {
-                    formik.setFieldValue("date", newValue.format("YYYY-MM-DD"))
+                    formik.setFieldValue("date", newValue.format("YYYY/MM/DD"))
                   }}
                   value={formik.values.date}
+                  onKeyPress={(e) => e.preventDefault()}
                   calendar={persian}
                   locale={persian_fa}
                   minDate={new DateObject({ calender: persian }).add(

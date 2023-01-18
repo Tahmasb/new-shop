@@ -28,7 +28,7 @@ export default function Menu(props) {
                       <Link
                         style={{
                           display: "block",
-                          padding: "0.9rem",
+                          padding: "0.7rem",
                           paddingLeft: "6rem",
                           paddingRight: "1rem",
                           fontFamily: "vazir",

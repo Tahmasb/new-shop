@@ -75,7 +75,7 @@ export default function ProductDetails() {
             height={400}
             component="img"
             src={selectProduct.img} //{dish}
-            alt="dish picture"
+            alt="product image"
           />
         </Grid>
         <Grid

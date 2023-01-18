@@ -9,9 +9,11 @@ import {
   Typography,
   Modal,
 } from "@mui/material"
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
 import React from "react"
 import { formatCurrency } from "../../utils"
-
+import { DateObject } from "react-multi-date-picker"
 export default function AdminOrderDone(props) {
   return (
     <Modal
@@ -58,9 +60,11 @@ export default function AdminOrderDone(props) {
 
           <Grid>
             <Typography display={"inline-block"}> زمان سفارش:</Typography>
-            <span
-              style={{ color: "var(--darkBlue)" }}
-            >{` ${props.customOrder.customerInfo.date}`}</span>
+            <span style={{ color: "var(--darkBlue)" }}>{` ${new DateObject(
+              props.customOrder.date
+            )
+              .convert(persian, persian_fa)
+              .format("YYYY/MM/DD")}`}</span>
           </Grid>
           <Grid>
             <Typography display={"inline-block"}> زمان تحویل:</Typography>
