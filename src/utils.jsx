@@ -3,17 +3,7 @@ const isLogin = (userName) => {
   else return false
 }
 const formatCurrency = (num) => {
-    return Number(Number(num).toFixed(3)).toLocaleString();
-  };
-function newSpace(num) {
-  if (typeof num !== "number") {
-    return 0
-  } else {
-    const number = new Intl.NumberFormat("en-US", { style: "decimal" }).format(
-      num
-    )
-    return number
-  }
+  return Number(Number(num).toFixed(3)).toLocaleString()
 }
 
 const removeProduct = (cartContext, uniqueID) => {
@@ -104,7 +94,6 @@ const removeNextList = (context, removeUniqueId) => {
 
 export {
   isLogin,
-  newSpace,
   formatCurrency,
   addProduct,
   removeProduct,

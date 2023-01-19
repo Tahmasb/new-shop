@@ -5,6 +5,7 @@ import {
   TextField,
   Typography,
   Modal,
+  Autocomplete,
 } from "@mui/material"
 import styles from "./panelProductAdd.module.css"
 import { useFormik } from "formik"
@@ -13,6 +14,9 @@ import * as Yup from "yup"
 import * as React from "react"
 
 export default function AdminProducts(props) {
+  const URL =
+    /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i
+
   const itemValue = JSON.parse(window.localStorage.getItem("all-categorys"))
   const formik = useFormik({
     initialValues: {
@@ -35,7 +39,7 @@ export default function AdminProducts(props) {
       addProduct()
     },
     validationSchema: Yup.object({
-      img: Yup.string().min(3, "لینک اشتباهه").required("ضروری"),
+      img: Yup.string().matches(URL, "ایمیل معتبر نیست").required("ضروری"),
       title: Yup.string().min(3, "حداقل سه کاراکتر").required("ضروری"),
       categoryName: Yup.string().required("ضروری"),
       exist: Yup.number().min(1, "بیشتر از صفر باشه").required("ضروری"),
@@ -51,7 +55,10 @@ export default function AdminProducts(props) {
     )[0] || { categoryId: "" }
     formik.setFieldValue("categoryId", test.categoryId)
   }, [formik.values.categoryName])
-
+  const newArrayOfObj = itemValue.map(({ categoryName: label, ...rest }) => ({
+    label,
+    ...rest,
+  }))
   return (
     <>
       <Modal open={props.openModal} onClose={() => props.setOpenModal(false)}>
@@ -95,7 +102,22 @@ export default function AdminProducts(props) {
             ) : null}
           </Grid>
           <Grid>
-            <TextField
+            <Autocomplete
+              options={newArrayOfObj}
+              disablePortal
+              freeSolo={true}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  size="small"
+                  label="دسته بندی"
+                  fullWidth
+                  type="text"
+                  {...formik.getFieldProps("categoryName")}
+                />
+              )}
+            />
+            {/* <TextField
               {...formik.getFieldProps("categoryName")}
               size="small"
               select
@@ -110,7 +132,7 @@ export default function AdminProducts(props) {
                   {item.categoryName}
                 </MenuItem>
               ))}
-            </TextField>
+            </TextField> */}
             {formik.touched.categoryName && formik.errors.categoryName ? (
               <Typography color={"red"} variant="caption">
                 {formik.errors.categoryName}

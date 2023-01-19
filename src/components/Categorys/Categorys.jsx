@@ -11,18 +11,38 @@ export default function Categorys() {
   const context = useContext(ProductsContext)
   const [skeleton, setSkeleton] = useState(true)
   const [categorys, setCategorys] = useState([])
+  let checkLocal =
+    localStorage.hasOwnProperty("all-products") &&
+    localStorage.hasOwnProperty("all-categorys") // or false
 
   async function fetchUsers() {
-    let { data } = await supabase.from("products").select("*")
-    let { data: categorys } = await supabase.from("categorys").select("*")
-    context.setProducts(data)
-    setCategorys(categorys || [])
-    window.localStorage.setItem("all-products", JSON.stringify(data || []))
-    window.localStorage.setItem(
-      "all-categorys",
-      JSON.stringify(categorys || [])
-    )
-    setSkeleton(false)
+    if (checkLocal) {
+      let products = JSON.parse(window.localStorage.getItem("all-products"))
+      let categorys = JSON.parse(window.localStorage.getItem("all-categorys"))
+      context.setProducts(products)
+      setCategorys(categorys || [])
+
+      window.localStorage.setItem(
+        "all-products",
+        JSON.stringify(products || [])
+      )
+      window.localStorage.setItem(
+        "all-categorys",
+        JSON.stringify(categorys || [])
+      )
+      setSkeleton(false)
+    } else {
+      let { data } = await supabase.from("products").select("*")
+      let { data: categorys } = await supabase.from("categorys").select("*")
+      context.setProducts(data)
+      setCategorys(categorys || [])
+      window.localStorage.setItem("all-products", JSON.stringify(data || []))
+      window.localStorage.setItem(
+        "all-categorys",
+        JSON.stringify(categorys || [])
+      )
+      setSkeleton(false)
+    }
   }
 
   useEffect(() => {

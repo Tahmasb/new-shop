@@ -1,56 +1,87 @@
-import { CardMedia, Grid, Typography } from "@mui/material"
-import { useContext, useEffect } from "react"
-import { ProductsContext, CartTemplate, Header } from ".."
+import { supabase } from "./../../CreateClient"
+import { useState } from "react"
 import styles from "./test.module.css"
-// import emptyCart from "./../../assets/img/empty-cart.png"
-import { styled } from "@mui/system"
-import React from "react"
-import {
-  formatCurrency,
-  removeFavorite,
-  removeProduct,
-  removeNextList,
-} from "./../../utils"
-import { useNavigate } from "react-router-dom"
-const GridCus = styled(Grid)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  row-gap: 0.7rem;
-`
-const TypographyCus = styled(Typography)`
-  text-align: center;
-  margin-top: 1.7rem;
-  margin-bottom: 1.7rem;
-  padding: 1rem;
-  background-color: #80cbc4;
-  border-radius: 1rem;
-`
-export default function Cart() {
-  const [accessCheckOut] = React.useState(true)
-  const context = useContext(ProductsContext)
-  const localStorageCart = JSON.parse(window.localStorage.getItem("cart-items"))
-  useEffect(() => context.setCartItems(localStorageCart || []), [])
-  const cartProps = { type: "اضافه کن", func: removeProduct, num: "عدد" }
-  const favoriteProps = { type: "برو تو سبد", func: removeFavorite, num: "" }
-  const nextListProps = { type: "برو تو سبد", func: removeNextList, num: "" }
-  const navigate = useNavigate()
-  let numNextList = context.nextList.length
-  const allPrice = context.cartItems.reduce((a, c) => a + c.price * c.count, 0)
-  let numFavoriteItems = context.favorite.length
+export default function Test() {
+  const [email, setEmail] = useState("") // email of the user
+  const [password, setPassword] = useState("") // password of the user
+  const [username, setUsername] = useState("") // username of the user
+  const [Rmsg, setRMsg] = useState("") // Registration message
+  const [Lmsg, setLMsg] = useState("") // Login message
+  const [user, setUser] = useState("") // User object after registration / login
+  const [session, setSession] = useState("") // session object after registration / login
+  // Register code
+  const Register = async () => {
+    const { data, error } = await supabase.auth.signUp(
+      { email, password },
+      { data: { username } }
+    )
+    if (error) {
+      setRMsg(error.message)
+    } else {
+      setRMsg("User created successfully")
+      setUser(data.user)
+    }
+  }
 
+  // Login code
+  const Login = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    if (error) {
+      setLMsg(error.message)
+    } else {
+      setLMsg("Login successfully")
+      setUser(data.user)
+      setSession(data.session)
+      console.log(data.session)
+    }
+  }
   return (
-    <>
-      <Header />
-      <Grid display="flex">
-        <Grid flex={1} sx={{ bgcolor: "lightblue" }}>
-          سبد
-        </Grid>
-        <Grid flex={0.4} sx={{ bgcolor: "lightgray" }}>
-          سبد بعدی
-        </Grid>
-      </Grid>
-    </>
+    <div className="App">
+      <h1>Register User</h1>
+      email:
+      <input
+        type="email"
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter your email"
+      />
+      <br />
+      Password:
+      <input
+        type="password"
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Enter your Password"
+      />
+      <br />
+      username:
+      <input
+        type="text"
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Enter your username"
+      />
+      <br />
+      <button onClick={Register}>Register</button> {/*    */}
+      <br />
+      <p>{Rmsg}</p>
+      <h1>Login</h1>
+      email:
+      <input
+        type="email"
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter your email"
+      />
+      <br /> Password:
+      <input
+        type="password"
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Enter your Password"
+      />
+      <br />
+      <button onClick={Login}>Login</button> {/*  */}
+      <br />
+      <p>{Lmsg}</p>
+    </div>
   )
 }
