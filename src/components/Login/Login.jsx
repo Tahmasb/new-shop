@@ -5,31 +5,59 @@ import {
   Typography,
   InputAdornment,
   TextField,
+  Snackbar,
+  Alert,
 } from "@mui/material"
+import { setCookie, getCookie } from "../../utils"
+import { IoMdClose } from "react-icons/io"
+import { supabase } from "./../../CreateClient"
 import { BsTwitter, BsGithub, BsGoogle } from "react-icons/bs"
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import { useNavigate } from "react-router-dom"
 import {
   MdOutlineVisibility,
   MdOutlineVisibilityOff,
   MdAlternateEmail,
 } from "react-icons/md"
-import { useState } from "react"
-export default function Login() {
+import { useState, useContext } from "react"
+import { ProductsContext } from "./.."
+export default function Login(props) {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
+  const context = useContext(ProductsContext)
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values))
+      login()
+      // alert(JSON.stringify(values))
     },
     validationSchema: Yup.object({
       email: Yup.string().email("ایمیل معتبر نیست").required("ضروری"),
       password: Yup.string().min(8, "حداقل هشت کاراکتر").required("ضروری"),
     }),
   })
+  let password = formik.values.password
+  let email = formik.values.email
+  const [snackLoginShow, setSnackLoginShow] = useState(false)
+
+  const login = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    if (error) {
+      setSnackLoginShow(true)
+    } else {
+      setCookie("user-email", data.user.email, 2)
+      context.setIsUserLogin(Boolean(getCookie("user-email")))
+      navigate("/admin/products")
+    }
+  }
+
   return (
     <>
       <Grid margin={"auto"} mb={6} marginTop={"10vh"} maxWidth={350}>
@@ -41,13 +69,24 @@ export default function Login() {
           flexDirection={"column"}
           alignItems="center"
           gap={3.5}
+          position="relative"
         >
+          <IoMdClose
+            onClick={() => props.closeModal(false)}
+            style={{
+              position: "absolute",
+              top: "12px",
+              right: "12px",
+              cursor: "pointer",
+            }}
+          />
+
           <Typography variant="h6">ورود</Typography>
           <Grid mt={3} display="flex" flexDirection={"column"}>
             <TextField
               {...formik.getFieldProps("email")}
-              label="ایمیل"
-              autoFocus
+              label="ایمیل hggvff222@gmail.com"
+              error={Boolean(formik.errors.email)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -66,12 +105,14 @@ export default function Login() {
           <Grid mt={3} display="flex" flexDirection={"column"}>
             <TextField
               {...formik.getFieldProps("password")}
-              label="رمز عبور"
+              label=" رمز aliALI22 "
+              error={Boolean(formik.errors.password)}
               type={showPassword ? "text" : "password"}
               InputProps={{
                 endAdornment: (
                   <InputAdornment
                     position="end"
+                    style={{ cursor: "pointer" }}
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -98,6 +139,7 @@ export default function Login() {
             }}
             variant="contained"
             size="large"
+            disabled={!formik.isValid}
           >
             ورود
           </Button>
@@ -118,6 +160,14 @@ export default function Login() {
           </Grid>
         </Grid>
       </Grid>
+      <Snackbar
+        open={snackLoginShow}
+        autoHideDuration={4000}
+        onClose={() => setSnackLoginShow(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="error">همچین کاربری وجود ندارد</Alert>
+      </Snackbar>
     </>
   )
 }

@@ -1,13 +1,12 @@
 import {
   Button,
   Grid,
-  MenuItem,
   TextField,
   Typography,
   Modal,
   Autocomplete,
 } from "@mui/material"
-import styles from "./panelProductAdd.module.css"
+import { IoMdClose } from "react-icons/io"
 import { useFormik } from "formik"
 import { supabase } from "../../CreateClient"
 import * as Yup from "yup"
@@ -69,8 +68,18 @@ export default function AdminProducts(props) {
           display="flex"
           flexDirection={"column"}
           gap={2.8}
+          position="relative"
           sx={{ bgcolor: "var(--lightGray)", borderRadius: "5px", mx: "auto" }}
         >
+          <IoMdClose
+            onClick={() => props.setOpenModal(false)}
+            style={{
+              position: "absolute",
+              top: "12px",
+              right: "12px",
+              cursor: "pointer",
+            }}
+          />
           <Typography textAlign="center">افزودن کالا</Typography>
           <Grid>
             <TextField

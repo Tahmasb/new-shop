@@ -8,9 +8,7 @@ import routes from "./routes"
 import { useEffect } from "react"
 export default function App() {
   const route = useRoutes(routes)
-  useEffect(() => {
-    document.cookie = "_identity;max-age=0"
-  }, [])
+  useEffect(() => {}, [])
   return (
     <>
       <CacheProvider value={cacheRTL}>

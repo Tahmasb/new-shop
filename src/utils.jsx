@@ -1,9 +1,21 @@
-const isLogin = (userName) => {
-  if (userName === "mojtaba") return true
-  else return false
-}
 const formatCurrency = (num) => {
   return Number(Number(num).toFixed(3)).toLocaleString()
+}
+const setCookie = (cookieName, cookieValue, exDay) => {
+  const now = new Date()
+  now.setTime(now.getTime() + exDay * 24 * 60 * 60 * 1000)
+  document.cookie = `${cookieName}=${cookieValue};path=/;expires=${now}`
+}
+const getCookie = (cookieName) => {
+  let cookieArray = document.cookie.split(";")
+  let cookieValue = ""
+  cookieArray.some((cookie) => {
+    if (cookie.includes(cookieName)) {
+      cookieValue = cookie.substring(cookie.indexOf("=") + 1)
+      return true
+    }
+  })
+  return cookieValue
 }
 
 const removeProduct = (cartContext, uniqueID) => {
@@ -93,7 +105,6 @@ const removeNextList = (context, removeUniqueId) => {
 }
 
 export {
-  isLogin,
   formatCurrency,
   addProduct,
   removeProduct,
@@ -101,4 +112,6 @@ export {
   removeFavorite,
   addNextList,
   removeNextList,
+  setCookie,
+  getCookie,
 }

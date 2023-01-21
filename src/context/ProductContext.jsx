@@ -1,12 +1,14 @@
-import { isLogin } from "../utils"
 import { useState, createContext } from "react"
+import { getCookie } from "../utils"
+const isCookieExist = Boolean(getCookie("user-email"))
+
 const ProductsContext = createContext()
 export let ProductsProvider = ({ children }) => {
   let [products, setProducts] = useState([])
   let [cartItems, setCartItems] = useState([])
   let [favorite, setFavorite] = useState([])
   let [nextList, setNextList] = useState([])
-  let [isUserLogin, setIsUserLogin] = useState(isLogin("mojtaba"))
+  let [isUserLogin, setIsUserLogin] = useState(isCookieExist)
 
   return (
     <ProductsContext.Provider
@@ -20,6 +22,7 @@ export let ProductsProvider = ({ children }) => {
         nextList,
         setNextList,
         isUserLogin,
+        setIsUserLogin,
       }}
     >
       {children}

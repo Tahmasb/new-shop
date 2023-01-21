@@ -61,7 +61,7 @@ export default function Header() {
           }}
         >
           <>
-            <Login />
+            <Login closeModal={setLoginModal} />
           </>
         </Modal>
         <Grid

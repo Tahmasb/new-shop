@@ -16,7 +16,7 @@ export default function Categorys() {
     localStorage.hasOwnProperty("all-categorys") // or false
 
   async function fetchUsers() {
-    if (checkLocal) {
+    if (false) {
       let products = JSON.parse(window.localStorage.getItem("all-products"))
       let categorys = JSON.parse(window.localStorage.getItem("all-categorys"))
       context.setProducts(products)

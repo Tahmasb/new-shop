@@ -110,7 +110,7 @@ export default function adminProducts() {
   // custom message when get data from api
   function CustomMessage() {
     return (
-      <Grid textAlign={"center"} mt={"20%"}>
+      <Grid sx={{ textAlign: { xs: "end", sm: "center" } }} mt={"20%"}>
         <Typography>در حال دریافت محصولات از سرور</Typography>
       </Grid>
     )

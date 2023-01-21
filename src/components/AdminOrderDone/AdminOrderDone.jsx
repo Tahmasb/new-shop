@@ -9,6 +9,7 @@ import {
   Typography,
   Modal,
 } from "@mui/material"
+import { IoMdClose } from "react-icons/io"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import React from "react"
@@ -27,7 +28,17 @@ export default function AdminOrderDone(props) {
           margin: "auto",
           mt: "5rem",
         }}
+        position="relative"
       >
+        <IoMdClose
+          onClick={() => props.closeModal(false)}
+          style={{
+            position: "absolute",
+            top: "12px",
+            right: "12px",
+            cursor: "pointer",
+          }}
+        />
         <Typography variant="h6" textAlign={"center"} py={3}>
           جزئیات سفارش
         </Typography>
