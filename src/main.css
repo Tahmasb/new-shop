@@ -59,3 +59,8 @@ title {
 ::-webkit-scrollbar-thumb:hover {
   background: #9e9e9e;
 }
+.error-conection {
+  height: 70vh;
+  text-align: center;
+  margin-top: 20vh;
+}

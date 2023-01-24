@@ -86,7 +86,7 @@ export default function Login(props) {
             <TextField
               {...formik.getFieldProps("email")}
               label="ایمیل hggvff222@gmail.com"
-              error={Boolean(formik.errors.email)}
+              // error={Boolean(formik.errors.email)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -106,7 +106,6 @@ export default function Login(props) {
             <TextField
               {...formik.getFieldProps("password")}
               label=" رمز aliALI22 "
-              error={Boolean(formik.errors.password)}
               type={showPassword ? "text" : "password"}
               InputProps={{
                 endAdornment: (

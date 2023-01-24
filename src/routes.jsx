@@ -8,8 +8,8 @@ import {
   Test,
   AdminProducts,
   Checkout,
+  CustomCategory,
 } from "./components"
-import CustomCategory from "./components/CustomCategory/CustomCategory"
 const routes = [
   { path: "/", element: <Index /> },
   { path: "*", element: <NotFound /> },

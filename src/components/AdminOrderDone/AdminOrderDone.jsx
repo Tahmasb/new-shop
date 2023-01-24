@@ -8,7 +8,11 @@ import {
   TableRow,
   Typography,
   Modal,
+  Button,
 } from "@mui/material"
+import { styled } from "@mui/system"
+import styles from "./adminOrderDone.module.css"
+import { supabase } from "../../CreateClient"
 import { IoMdClose } from "react-icons/io"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
@@ -16,17 +20,32 @@ import React from "react"
 import { formatCurrency } from "../../utils"
 import { DateObject } from "react-multi-date-picker"
 export default function AdminOrderDone(props) {
+  async function updateOrder(orderId) {
+    const { data, error } = await supabase
+      .from("orders")
+      .update({ delivered: true })
+      .eq("id", orderId)
+    if (error) console.log(error)
+    if (data) console.log(data)
+  }
+
+  const TableCellCus = styled(TableCell)`
+    color: #f4f2ef;
+  `
+
   return (
     <Modal
       open={props.openModal}
+      sx={{ overflowY: "auto" }}
       onClose={() => props.closeModal((prev) => !prev)}
     >
       <Grid
         sx={{
           width: { xs: "95%", sm: "90%", md: "70%", lg: "60%" },
-          bgcolor: "lightgray",
+          bgcolor: "#18144d",
+          color: "#efc01a",
           margin: "auto",
-          mt: "5rem",
+          mt: "2rem",
         }}
         position="relative"
       >
@@ -36,10 +55,11 @@ export default function AdminOrderDone(props) {
             position: "absolute",
             top: "12px",
             right: "12px",
+            color: "#efc01a",
             cursor: "pointer",
           }}
         />
-        <Typography variant="h6" textAlign={"center"} py={3}>
+        <Typography color="#efc01a" variant="h6" textAlign={"center"} py={3}>
           جزئیات سفارش
         </Typography>
         <Grid
@@ -51,37 +71,27 @@ export default function AdminOrderDone(props) {
         >
           <Typography>
             نام مشتری:
-            <span style={{ color: "var(--darkBlue)" }}>
+            <span>
               {" "}
               {`${props.customOrder.customerInfo.name} ${props.customOrder.customerInfo.family}`}
             </span>
           </Typography>
           <Typography>
-            آدرس:{" "}
-            <span style={{ color: "var(--darkBlue)" }}>
-              {props.customOrder.customerInfo.address}
-            </span>
+            آدرس: <span>{props.customOrder.customerInfo.address}</span>
           </Typography>
           <Typography>
-            تلفن:{" "}
-            <span style={{ color: "var(--darkBlue)" }}>
-              {props.customOrder.customerInfo.phone}
-            </span>{" "}
+            تلفن: <span>{props.customOrder.customerInfo.phone}</span>{" "}
           </Typography>
 
           <Grid>
             <Typography display={"inline-block"}> زمان سفارش:</Typography>
-            <span style={{ color: "var(--darkBlue)" }}>{` ${new DateObject(
-              props.customOrder.date
-            )
+            <span>{` ${new DateObject(props.customOrder.date)
               .convert(persian, persian_fa)
               .format("YYYY/MM/DD")}`}</span>
           </Grid>
           <Grid>
             <Typography display={"inline-block"}> زمان تحویل:</Typography>
-            <span
-              style={{ color: "var(--darkBlue)" }}
-            >{` ${props.customOrder.customerInfo.date}`}</span>
+            <span>{` ${props.customOrder.customerInfo.date}`}</span>
           </Grid>
         </Grid>
 
@@ -89,9 +99,9 @@ export default function AdminOrderDone(props) {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>کالا</TableCell>
-                <TableCell>قیمت</TableCell>
-                <TableCell>تعداد</TableCell>
+                <TableCellCus>کالا</TableCellCus>
+                <TableCellCus>قیمت</TableCellCus>
+                <TableCellCus>تعداد</TableCellCus>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -100,20 +110,35 @@ export default function AdminOrderDone(props) {
                   key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell
+                  <TableCellCus
                     style={{ fontFamily: "vazir" }}
                     component="th"
                     scope="row"
                   >
                     {item.title}
-                  </TableCell>
-                  <TableCell>{formatCurrency(item.price)}</TableCell>
-                  <TableCell>{item.count}</TableCell>
+                  </TableCellCus>
+                  <TableCellCus>{formatCurrency(item.price)}</TableCellCus>
+                  <TableCellCus>{item.count}</TableCellCus>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+        {!props.customOrder.delivered ? (
+          <Grid display="flex" justifyContent="center" py={2}>
+            <Button
+              onClick={() => {
+                updateOrder(props.customOrder.id)
+                props.closeModal(false)
+              }}
+              variant="contained"
+              color="success"
+              sx={{ color: "#efc01a" }}
+            >
+              تحویل شد
+            </Button>
+          </Grid>
+        ) : null}
       </Grid>
     </Modal>
   )

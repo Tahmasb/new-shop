@@ -1,4 +1,8 @@
-import { CardMedia, Grid, Typography } from "@mui/material"
+import { CardMedia, Grid, Typography, Box } from "@mui/material"
+import Tab from "@mui/material/Tab"
+import TabContext from "@mui/lab/TabContext"
+import TabList from "@mui/lab/TabList"
+import TabPanel from "@mui/lab/TabPanel"
 import { useContext, useEffect } from "react"
 import { ProductsContext, CartTemplate } from ".."
 import styles from "./cart.module.css"
@@ -12,21 +16,24 @@ import {
   removeNextList,
 } from "./../../utils"
 import { useNavigate } from "react-router-dom"
-const GridCus = styled(Grid)`
+
+const TypographyCus = styled(Typography)`
+  padding: 1rem;
+`
+const GridCus2 = styled(Grid)`
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  row-gap: 0.7rem;
-`
-const TypographyCus = styled(Typography)`
-  margin-top: 1.5rem;
-  margin-bottom: 1.7rem;
-  padding: 1rem;
-  background-color: white;
-  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  margin-bottom: 1.2rem;
 `
 export default function Cart() {
+  const [tabNum, setTabNum] = React.useState("1")
+  const handleChange = (event, newValue) => {
+    setTabNum(newValue)
+  }
   const [accessCheckOut] = React.useState(true)
   const context = useContext(ProductsContext)
   const localStorageCart = JSON.parse(window.localStorage.getItem("cart-items"))
@@ -41,86 +48,71 @@ export default function Cart() {
 
   return (
     <>
-      <Grid
-        display="flex"
-        pb={0}
-        sx={{
-          flexDirection: { xs: "column", md: "row" },
-          bgcolor: "#f5f5f5",
-        }}
-      >
-        {(context.cartItems.length || 0) > 0 ? (
-          <GridCus
-            minHeight={"74vh"}
-            pb={3}
-            px={1}
-            borderBottom={1}
-            borderColor="lightgray"
-          >
-            <TypographyCus>
-              تعداد محصولات سبد خرید: {context.cartItems.length}
-            </TypographyCus>
-            {context.cartItems.map((item, index) => (
-              <CartTemplate info={cartProps} key={index} cartItem={item} />
-            ))}
-            <Grid
-              sx={{ position: { xs: "fixed", md: "static" }, bottom: "0px" }}
-              className={styles.endPriceParent}
-            >
-              <Typography
-                onClick={() => {
-                  navigate("/checkout", {
-                    state: { allprice: allPrice, access: accessCheckOut },
-                  })
-                }}
-                className={styles.endPriceChild}
-              >
-                نهایی کردن خرید : {formatCurrency(allPrice)} تومان
-              </Typography>
-            </Grid>
-          </GridCus>
-        ) : (
-          <GridCus>
-            <CardMedia
-              component="img"
-              src="https://s2.uupload.ir/files/empty-cart_4v3w.png"
-              style={{ objectFit: "contain", height: "80vh" }}
-              alt="empty-cart"
+      <TabContext value={tabNum}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+          }}
+        >
+          <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab
+              label={`سبدخرید   ${context.cartItems.length || ""}`}
+              value="1"
             />
-          </GridCus>
-        )}
-        <GridCus px={1}>
-          {numFavoriteItems ? (
-            <GridCus>
-              <TypographyCus>
-                چیزایی که دوس داری: {numFavoriteItems}
-              </TypographyCus>
-              {context.favorite.map((item, index) => (
-                <CartTemplate
-                  info={favoriteProps}
-                  key={index}
-                  cartItem={item}
-                />
-              ))}
-            </GridCus>
-          ) : (
-            <Grid
-              display="flex"
-              mt={1}
-              alignItems="center"
-              rowGap={10}
-              flexDirection={"column"}
-            >
-              <TypographyCus width={180}>لیست مورد علاقت خالیه</TypographyCus>
-              <TypographyCus sx={{ bgcolor: "#f5f5f5" }} variant="caption">
-                میتونی محصولاتی که دوست داری رو از صفحه اون محصول به اینجا اضافه
-                کنی
-              </TypographyCus>
-            </Grid>
-          )}
+            <Tab label={`خرید بعدی  ${numNextList || ""}`} value="2" />
+            <Tab label={`علاقه‌مندی‌ها  ${numFavoriteItems || ""}`} value="3" />
+          </TabList>
+        </Box>
+        <TabPanel sx={{ p: "0px" }} value="1">
+          <GridCus2
+            position={"relative"}
+            sx={{ width: { xs: "100%", md: "70%", lg: "60%" } }}
+          >
+            {(context.cartItems.length || 0) > 0 ? (
+              <>
+                <Grid mb={12}>
+                  {context.cartItems.map((item, index) => (
+                    <CartTemplate
+                      info={cartProps}
+                      key={index}
+                      cartItem={item}
+                    />
+                  ))}
+                </Grid>
+                <Grid
+                  sx={{
+                    position: { xs: "fixed", md: "absolute" },
+                    bottom: { xs: "0px", md: "0px" },
+                  }}
+                  className={styles.endPriceParent}
+                >
+                  <Typography
+                    onClick={() => {
+                      navigate("/checkout", {
+                        state: { allprice: allPrice, access: accessCheckOut },
+                      })
+                    }}
+                    className={styles.endPriceChild}
+                  >
+                    نهایی کردن خرید : {formatCurrency(allPrice)} تومان
+                  </Typography>
+                </Grid>
+              </>
+            ) : (
+              <CardMedia
+                component="img"
+                src="https://s2.uupload.ir/files/empty-cart_4v3w.png"
+                style={{ objectFit: "contain", height: "80vh" }}
+                alt="empty-cart"
+              />
+            )}
+          </GridCus2>
+        </TabPanel>
+        <TabPanel sx={{ p: "0px" }} value="2">
+          {" "}
           {numNextList ? (
-            <GridCus pb={5}>
-              <TypographyCus>سبد خرید بعدی شما: {numNextList}</TypographyCus>
+            <GridCus2 sx={{ width: { xs: "100%", md: "70%", lg: "60%" } }}>
               {context.nextList.map((item, index) => (
                 <CartTemplate
                   info={nextListProps}
@@ -128,24 +120,38 @@ export default function Cart() {
                   cartItem={item}
                 />
               ))}
-            </GridCus>
+            </GridCus2>
           ) : (
-            <Grid
-              display="flex"
-              alignItems="center"
-              rowGap={10}
-              mt={10}
-              flexDirection={"column"}
-            >
-              <TypographyCus width={180}>سبد خرید بعدیت خالیه</TypographyCus>
-              <TypographyCus sx={{ bgcolor: "#f5f5f5" }} variant="caption">
-                میتونی محصولاتی که بعدا میخای بخری از صفحه اون محصول به اینجا
-                اضافه کنی
+            <GridCus2 style={{ marginTop: "5px" }}>
+              <TypographyCus>سبد خرید بعدیت خالیه</TypographyCus>
+              <TypographyCus variant="caption">
+                میتونی چیزایی که بعدا میخای بخری از صفحه محصول به اینجا اضافه
+                کنی
               </TypographyCus>
-            </Grid>
+            </GridCus2>
           )}
-        </GridCus>
-      </Grid>
+        </TabPanel>
+        <TabPanel sx={{ p: "0px" }} value="3">
+          {numFavoriteItems ? (
+            <GridCus2 sx={{ width: { xs: "100%", md: "70%", lg: "60%" } }}>
+              {context.favorite.map((item, index) => (
+                <CartTemplate
+                  info={favoriteProps}
+                  key={index}
+                  cartItem={item}
+                />
+              ))}
+            </GridCus2>
+          ) : (
+            <GridCus2 style={{ marginTop: "5px" }}>
+              <TypographyCus>لیست مورد علاقت خالیه</TypographyCus>
+              <TypographyCus variant="caption">
+                میتونی چیزایی که دوست داری رو از صفحه محصول به اینجا اضافه کنی
+              </TypographyCus>
+            </GridCus2>
+          )}
+        </TabPanel>
+      </TabContext>
     </>
   )
 }

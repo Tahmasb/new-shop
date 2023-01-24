@@ -6,6 +6,8 @@ import "./adminProducts.css"
 import { AiOutlineDelete } from "react-icons/ai"
 import { Grid, Snackbar, Modal, Typography, Button, Alert } from "@mui/material"
 import { formatCurrency } from "../../utils"
+import { IoMdClose } from "react-icons/io"
+import { useQuery } from "react-query"
 
 export default function adminProducts() {
   // states
@@ -17,6 +19,10 @@ export default function adminProducts() {
   const [rows, setRows] = React.useState([])
   const [openModalDelete, setOpenModalDelete] = React.useState(false)
   const [editSnack, setEditSnack] = React.useState(false)
+  React.useEffect(() => {
+    fetchProducts()
+    window.scrollTo(0, 0)
+  }, [])
   // functions
   const handleClose = () => setOpenModalDelete(false)
 
@@ -27,7 +33,7 @@ export default function adminProducts() {
       .eq("uniqueId", productId)
 
     if (data) console.log(data)
-    if (error) console.log(error)
+    else console.log(error)
 
     handleClose()
     fetchProducts()
@@ -40,21 +46,26 @@ export default function adminProducts() {
       .update(editedProduct)
       .eq("uniqueId", editedProduct.uniqueId)
     if (error) console.log(error)
-    if (data) console.log(data)
+    else console.log(data)
     fetchProducts()
     setEditSnack(true)
   }
 
   async function fetchProducts() {
     let { data } = await supabase.from("products").select("*")
-    window.localStorage.setItem("all-products", JSON.stringify(data))
-    setRows(data)
+    return data
   }
 
-  React.useEffect(() => {
-    fetchProducts()
-    window.scrollTo(0, 0)
-  }, [])
+  const { data, status } = useQuery(["orders"], fetchProducts)
+  if (status === "loading")
+    return (
+      <Grid className="error-conection">در حال دریافت محصولات از سرور</Grid>
+    )
+  if (data === null)
+    return (
+      <Grid className="error-conection">لطفا اتصال اینترنت را بررسی کنید</Grid>
+    )
+
   // data-grid column
   const columns = [
     {
@@ -107,14 +118,7 @@ export default function adminProducts() {
       ),
     },
   ]
-  // custom message when get data from api
-  function CustomMessage() {
-    return (
-      <Grid sx={{ textAlign: { xs: "end", sm: "center" } }} mt={"20%"}>
-        <Typography>در حال دریافت محصولات از سرور</Typography>
-      </Grid>
-    )
-  }
+
   return (
     <>
       {/* modal add product and delete product */}
@@ -135,7 +139,18 @@ export default function adminProducts() {
           rowGap={5}
           mt={"32vh"}
           sx={{ bgcolor: "white", width: "300px" }}
+          position="relative"
         >
+          <IoMdClose
+            onClick={() => props.closeModal(false)}
+            style={{
+              position: "absolute",
+              top: "7px",
+              right: "7px",
+              color: "#efc01a",
+              cursor: "pointer",
+            }}
+          />
           <Typography textAlign={"center"}>
             مطمئنی میخای{" "}
             <span style={{ color: "red", fontSize: "1rem" }}>{deleteItem}</span>{" "}
@@ -193,24 +208,21 @@ export default function adminProducts() {
         >
           <DataGrid
             style={{ direction: "ltr" }}
-            rows={rows}
+            rows={data}
             columns={columns}
             getRowId={(row) => row.uniqueId}
-            processRowUpdate={React.useCallback(async (newRow) => {
+            processRowUpdate={(newRow) => {
               updateProduct(newRow)
               return newRow
-            })}
-            onProcessRowUpdateError={React.useCallback((error) => {
+            }}
+            onProcessRowUpdateError={(error) => {
               console.log(error.message)
-            })}
+            }}
             experimentalFeatures={{ newEditingApi: true }}
             editMode="row"
             onCellClick={(params) => {
               setDeleteId(params.id)
               setDeleteItem(params.row.title)
-            }}
-            components={{
-              NoRowsOverlay: CustomMessage,
             }}
           />
         </Grid>

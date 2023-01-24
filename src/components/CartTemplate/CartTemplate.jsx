@@ -22,9 +22,9 @@ export default function CartTemplate(props) {
         justifyContent={"space-between"}
         sx={{
           flexDirection: { xs: "column", s: "row" },
-          width: { xs: "100%", sm: "80%", md: "100%" },
+          borderBottom: "0.1px solid lightgray",
         }}
-        style={{ background: "white" }}
+        style={{ background: "#fafafa" }}
       >
         <Link
           to={`/product/${props.cartItem.categoryId}${props.cartItem.uniqueId}`}
@@ -48,7 +48,9 @@ export default function CartTemplate(props) {
             <Link
               to={`/product/${props.cartItem.categoryId}${props.cartItem.uniqueId}`}
             >
-              <Typography>{props.cartItem.title}</Typography>{" "}
+              <Typography fontFamily={"vazir"}>
+                {props.cartItem.title}
+              </Typography>{" "}
             </Link>
             <Typography>{formatCurrency(props.cartItem.price)}</Typography>
           </Grid>
