@@ -165,7 +165,7 @@ export default function Login(props) {
         onClose={() => setSnackLoginShow(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert severity="error">همچین کاربری وجود ندارد</Alert>
+        <Alert severity="error">ایمیل یا رمز ورود صحیح نیست</Alert>
       </Snackbar>
     </>
   )

@@ -12,11 +12,11 @@ import { useQuery } from "react-query"
 export default function adminProducts() {
   // states
   const [deleteItem, setDeleteItem] = React.useState("")
+  const [rows, setRows] = React.useState([])
   const [snackDeleteProduct, setSnackDeleteProduct] = React.useState(false)
   const [snackShow, setSnackShow] = React.useState(false)
   const [modalAddProduct, setModalAddProduct] = React.useState(false)
   const [deleteId, setDeleteId] = React.useState(null)
-  const [rows, setRows] = React.useState([])
   const [openModalDelete, setOpenModalDelete] = React.useState(false)
   const [editSnack, setEditSnack] = React.useState(false)
   React.useEffect(() => {
@@ -53,17 +53,12 @@ export default function adminProducts() {
 
   async function fetchProducts() {
     let { data } = await supabase.from("products").select("*")
+    setRows(data)
     return data
   }
-
-  const { data, status } = useQuery(["orders"], fetchProducts)
-  if (status === "loading")
+  if (rows === null)
     return (
-      <Grid className="error-conection">در حال دریافت محصولات از سرور</Grid>
-    )
-  if (data === null)
-    return (
-      <Grid className="error-conection">لطفا اتصال اینترنت را بررسی کنید</Grid>
+      <div className="error-conection">لطفا اتصال اینترنت را بررسی کنید</div>
     )
 
   // data-grid column
@@ -208,7 +203,7 @@ export default function adminProducts() {
         >
           <DataGrid
             style={{ direction: "ltr" }}
-            rows={data}
+            rows={rows}
             columns={columns}
             getRowId={(row) => row.uniqueId}
             processRowUpdate={(newRow) => {
