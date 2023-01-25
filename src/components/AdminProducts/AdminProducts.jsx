@@ -7,8 +7,6 @@ import { AiOutlineDelete } from "react-icons/ai"
 import { Grid, Snackbar, Modal, Typography, Button, Alert } from "@mui/material"
 import { formatCurrency } from "../../utils"
 import { IoMdClose } from "react-icons/io"
-import { useQuery } from "react-query"
-
 export default function adminProducts() {
   // states
   const [deleteItem, setDeleteItem] = React.useState("")
