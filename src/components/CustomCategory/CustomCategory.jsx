@@ -23,6 +23,7 @@ export default function CustomCategory() {
     fontSize: "1.5rem",
     cursor: "pointer",
     padding: ".2rem",
+    color: "white",
   }
   return (
     <>

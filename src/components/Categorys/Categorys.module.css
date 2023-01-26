@@ -1,8 +1,9 @@
 .parent-category-title {
-  background-color: var(--lightGray);
+  background-color: #0099ff;
 }
 .category-title {
   font-size: 1.3rem;
+  color: white;
   display: inline-flex;
   align-items: center;
   padding: 0.9rem;

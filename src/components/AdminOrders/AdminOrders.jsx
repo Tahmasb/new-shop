@@ -12,7 +12,7 @@ import {
   FormControlLabel,
 } from "@mui/material"
 import { BiSortAlt2 } from "react-icons/bi"
-// import styles from "./adminOrders.module.css"
+import styles from "./adminOrders.module.css"
 import { formatCurrency } from "../../utils"
 import { supabase } from "../../CreateClient"
 import { AdminOrderDone } from "./../"
@@ -148,14 +148,7 @@ export default function AdminOrders() {
                           onClick={() => {
                             setDetail(order)
                           }}
-                          sx={{
-                            display: "inline",
-                            bgcolor: "var(--lightGray)",
-                            borderRadius: "0.5rem",
-                            whiteSpace: "nowrap",
-                            cursor: "pointer",
-                            p: "5px",
-                          }}
+                          className={styles.checkOrder}
                         >
                           بررسی سفارش
                         </Typography>

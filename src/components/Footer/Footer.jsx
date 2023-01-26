@@ -12,10 +12,10 @@ export default function Footer() {
     align-items: center;
   `
   return (
-    <Grid bgcolor={"var(--lightGray)"} py={2}>
+    <Grid bgcolor={"#A2D9FF"} py={2}>
       <Grid mt={4} mx={2} display="flex" justifyContent={"space-around"}>
         <GridCus>
-          <Typography color="darkcyan">سایت‌های ما</Typography>
+          <Typography color="5000CA">سایت‌های ما</Typography>
           <Link className={styles.linkFooter}>سایت اول</Link>
           <Link className={styles.linkFooter}>سایت دوم</Link>
           <Link className={styles.linkFooter}>سایت سوم</Link>
@@ -23,7 +23,7 @@ export default function Footer() {
         </GridCus>
 
         <GridCus>
-          <Typography color="darkcyan">همراه با ما</Typography>
+          <Typography color="5000CA">همراه با ما</Typography>
           <Link className={styles.linkFooter}>فرصت شغلی</Link>
           <Link className={styles.linkFooter}>تماس با ما</Link>
           <Link className={styles.linkFooter}>درباره ما</Link>

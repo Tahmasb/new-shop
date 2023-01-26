@@ -34,20 +34,18 @@ export default function Menu(props) {
             </Link>
           </AccordionSummary>
           <AccordionDetails>
-            <ul>
-              {allProducts.map((product, indexx) =>
-                product.categoryId === category.categoryId ? (
-                  <li key={indexx}>
-                    <Link
-                      className={styles.categoryItem}
-                      to={`/product/${product.categoryId}${product.uniqueId}`}
-                    >
-                      {product.title}
-                    </Link>
-                  </li>
-                ) : null
-              )}
-            </ul>
+            {allProducts.map((product, indexx) =>
+              product.categoryId === category.categoryId ? (
+                <li key={indexx}>
+                  <Link
+                    className={styles.categoryItem}
+                    to={`/product/${product.categoryId}${product.uniqueId}`}
+                  >
+                    {product.title}
+                  </Link>
+                </li>
+              ) : null
+            )}
           </AccordionDetails>
         </Accordion>
       ))}

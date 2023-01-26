@@ -20,7 +20,6 @@ import { useLocation } from "react-router-dom"
 export default function Header() {
   let location = useLocation()
   const [inputValue, setInputValue] = React.useState("")
-  const [themState, setThemState] = React.useState(true)
   let localStorageCart =
     JSON.parse(window.localStorage.getItem("cart-items")) || []
   let localStorageProducts =
@@ -83,18 +82,6 @@ export default function Header() {
             </Link>
           </Tooltip>
           <Typography
-            onClick={() => {
-              setThemState(!themState)
-              themState
-                ? document.documentElement.style.setProperty(
-                    "--lightGray",
-                    "darkcyan"
-                  )
-                : document.documentElement.style.setProperty(
-                    "--lightGray",
-                    "lightgray"
-                  )
-            }}
             sx={{ display: { xs: "none", md: "flex", width: "59%" } }}
             variant="h6"
           >

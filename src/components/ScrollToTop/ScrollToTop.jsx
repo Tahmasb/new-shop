@@ -4,7 +4,7 @@ import { IoIosArrowUp } from "react-icons/io"
 export default function ScrollToTop() {
   const myStyleClassName = {
     "& :hover": {
-      backgroundColor: "var(--gray)",
+      backgroundColor: "white",
       borderRadius: "50%",
     },
   }
@@ -29,7 +29,7 @@ export default function ScrollToTop() {
           left: "20px",
           zIndex: "3",
           fontSize: "2.5rem",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#A2D9FF",
           borderRadius: "50%",
           paddind: "1rem",
         }}
@@ -42,7 +42,7 @@ export default function ScrollToTop() {
               ? {
                   display: "block",
                   cursor: "pointer",
-                  color: "var(--lightGray)",
+                  color: "#0099FF",
                 }
               : { display: "none" }
           }

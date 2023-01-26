@@ -1,0 +1,7 @@
+.check-order {
+  border: 1px solid #0099ff;
+  display: inline;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 3px;
+}

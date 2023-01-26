@@ -2,10 +2,6 @@ li {
   list-style: none;
   padding: 0px;
 }
-ul {
-  margin-top: -10px;
-  padding-right: 15px;
-}
 .category-item {
   font-family: vazir;
   display: block;
