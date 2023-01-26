@@ -1,23 +1,16 @@
 li {
   list-style: none;
-}
-ul {
   padding: 0px;
 }
-.category-name {
-  color: var(--darkBlue);
-  padding: 11px;
-  display: flex;
-  column-gap: 0.4rem;
-  align-items: center;
-  border-bottom: 1px solid gray;
-  background-color: lightgray;
+ul {
+  margin-top: -10px;
+  padding-right: 15px;
 }
 .category-item {
-  transition-duration: 700ms;
-  padding-right: 10px;
+  font-family: vazir;
+  display: block;
   white-space: nowrap;
-}
-.category-item:hover {
-  background-color: rgb(184, 180, 180);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 7rem;
 }

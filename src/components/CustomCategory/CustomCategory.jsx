@@ -50,7 +50,7 @@ export default function CustomCategory() {
           md={3}
           sx={{
             display: { xs: "none", md: "block" },
-            bgcolor: "var(--lightGray)",
+            // bgcolor: "var(--lightGray)",
           }}
         >
           <Menu close={setDrawerState} />
