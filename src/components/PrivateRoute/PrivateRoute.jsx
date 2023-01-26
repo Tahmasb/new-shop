@@ -27,7 +27,7 @@ export default function PrivateRoute({ children }) {
           border={1}
           p={0.6}
           columnGap={1}
-          borderColor={"blue"}
+          borderColor={"#0099ff"}
           borderRadius={"5px"}
         >
           <NavLink

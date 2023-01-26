@@ -233,7 +233,7 @@ export default function ProductDetails() {
         justifyContent={"space-around"}
       >
         <Grid mt={3} display="flex" flexDirection={"column"} rowGap={1}>
-          <Typography color="darkcyan">مشخصات محصول</Typography>
+          <Typography color="#0099ff">مشخصات محصول</Typography>
           <Typography mt={1}>قدرت : بی نظیر</Typography>
           <Typography>زیبایی : مدرن</Typography>
           <Typography>ضدآب : در برابراسپری</Typography>
@@ -247,7 +247,7 @@ export default function ProductDetails() {
           flexDirection={"column"}
           rowGap={1}
         >
-          <Typography color="darkcyan">مشخصات محصول</Typography>
+          <Typography color="#0099ff">مشخصات محصول</Typography>
           <Typography mt={1}>قدرت : بی نظیر</Typography>
           <Typography>زیبایی : مدرن</Typography>
           <Typography>ضدآب : در برابر اسپری</Typography>

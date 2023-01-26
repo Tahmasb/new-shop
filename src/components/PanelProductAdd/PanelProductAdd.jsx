@@ -5,6 +5,8 @@ import {
   Typography,
   Modal,
   Autocomplete,
+  Snackbar,
+  Alert,
 } from "@mui/material"
 import { IoMdClose } from "react-icons/io"
 import { useFormik } from "formik"
@@ -13,6 +15,8 @@ import * as Yup from "yup"
 import * as React from "react"
 
 export default function AdminProducts(props) {
+  const [snackError, setSnackError] = React.useState(false)
+  const [errorMessage, setErrorMessage] = React.useState("")
   const URL =
     /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i
 
@@ -28,17 +32,23 @@ export default function AdminProducts(props) {
     },
     onSubmit: (values, { resetForm }) => {
       async function addProduct() {
-        await supabase.from("products").insert(values)
-        props.setOpenModal(false)
-        props.setSnack(true)
-        props.fetchProducts()
-        resetForm()
+        const { error } = await supabase.from("products").insert(values)
+        if (error === null) {
+          props.setOpenModal(false)
+          props.setSnack(true)
+          props.fetchProducts()
+          console.log(error)
+          resetForm()
+        } else {
+          snackError(true)
+          setErrorMessage(error.message)
+        }
       }
       // alert(JSON.stringify(values))
       addProduct()
     },
     validationSchema: Yup.object({
-      img: Yup.string().matches(URL, "ایمیل معتبر نیست").required("ضروری"),
+      img: Yup.string().matches(URL, "لینک معتبر نیست").required("ضروری"),
       title: Yup.string().min(3, "حداقل سه کاراکتر").required("ضروری"),
       categoryName: Yup.string().required("ضروری"),
       exist: Yup.number().min(1, "بیشتر از صفر باشه").required("ضروری"),
@@ -111,9 +121,14 @@ export default function AdminProducts(props) {
             ) : null}
           </Grid>
           <Grid>
+            {/* {console.log(newArrayOfObj)} */}
             <Autocomplete
-              options={newArrayOfObj}
               disablePortal
+              name="categoryName"
+              options={newArrayOfObj}
+              onChange={(value, value2) => {
+                formik.setFieldValue("categoryName", value2.label)
+              }}
               freeSolo={true}
               renderInput={(params) => (
                 <TextField
@@ -122,26 +137,10 @@ export default function AdminProducts(props) {
                   label="دسته بندی"
                   fullWidth
                   type="text"
-                  {...formik.getFieldProps("categoryName")}
                 />
               )}
             />
-            {/* <TextField
-              {...formik.getFieldProps("categoryName")}
-              size="small"
-              select
-              label={"دسته بندی"}
-              defaultValue={""}
-              type="text"
-              variant="outlined"
-              fullWidth
-            >
-              {itemValue.map((item) => (
-                <MenuItem key={item.categoryId} value={item.categoryName}>
-                  {item.categoryName}
-                </MenuItem>
-              ))}
-            </TextField> */}
+
             {formik.touched.categoryName && formik.errors.categoryName ? (
               <Typography color={"red"} variant="caption">
                 {formik.errors.categoryName}
@@ -199,6 +198,14 @@ export default function AdminProducts(props) {
           </Button>
         </Grid>
       </Modal>
+      <Snackbar
+        open={snackError}
+        autoHideDuration={4000}
+        onClose={() => setSnackError(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="error">{errorMessage}</Alert>
+      </Snackbar>
     </>
   )
 }

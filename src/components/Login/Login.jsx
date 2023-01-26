@@ -8,7 +8,7 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material"
-import { setCookie, getCookie } from "../../utils"
+import { setCookie } from "../../utils"
 import { IoMdClose } from "react-icons/io"
 import { supabase } from "./../../CreateClient"
 import { BsTwitter, BsGithub, BsGoogle } from "react-icons/bs"
@@ -53,7 +53,7 @@ export default function Login(props) {
       setSnackLoginShow(true)
     } else {
       setCookie("user-email", data.user.email, 2)
-      context.setIsUserLogin(Boolean(getCookie("user-email")))
+      context.setIsUserLogin(true)
       navigate("/admin/products")
     }
   }

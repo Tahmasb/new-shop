@@ -1,5 +1,5 @@
 .link-footer {
-  color: var(--darkBlue);
+  color: black !important;
 }
 .parent-icon {
   padding: 1.2rem;
@@ -11,5 +11,8 @@
   font-size: 1.3rem;
 }
 /* .wave {
-  background-image: url(./../../assets/img/wave.svg);
+  z-index: -1;
+  position: absolute;
+  bottom: 0;
+  height: 100%;
 } */

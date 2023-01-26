@@ -10,12 +10,13 @@ ul {
   display: flex;
   column-gap: 0.4rem;
   align-items: center;
-  /* border-bottom: 1px solid gray; */
+  border-bottom: 1px solid gray;
   background-color: lightgray;
 }
 .category-item {
   transition-duration: 700ms;
   padding-right: 10px;
+  white-space: nowrap;
 }
 .category-item:hover {
   background-color: rgb(184, 180, 180);

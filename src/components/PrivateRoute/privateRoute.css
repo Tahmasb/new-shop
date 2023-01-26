@@ -1,15 +1,10 @@
 .active {
   color: red;
 }
-/* .private-header {
-  background-color: var(--gray);
-} */
 .back-to-main {
-  background-color: var(--lightGray);
+  /* background-color: var(--lightGray); */
+  border: 1px solid #0099ff;
   padding: 4px;
   border-radius: 4px;
   white-space: nowrap;
 }
-/* p {
-  font-family: "test" !important;
-} */

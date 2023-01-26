@@ -6,6 +6,11 @@ const setCookie = (cookieName, cookieValue, exDay) => {
   now.setTime(now.getTime() + exDay * 24 * 60 * 60 * 1000)
   document.cookie = `${cookieName}=${cookieValue};path=/;expires=${now}`
 }
+const removeCookie = (cookieName, cookieValue) => {
+  const now = new Date()
+  now.setTime(now.getTime() - 2 * 24 * 60 * 60 * 1000)
+  document.cookie = `${cookieName}=${cookieValue};path=/;expires=${now}`
+}
 const getCookie = (cookieName) => {
   let cookieArray = document.cookie.split(";")
   let cookieValue = ""
@@ -114,4 +119,5 @@ export {
   removeNextList,
   setCookie,
   getCookie,
+  removeCookie,
 }

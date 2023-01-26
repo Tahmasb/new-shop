@@ -10,6 +10,7 @@ import { IoMdClose } from "react-icons/io"
 export default function adminProducts() {
   // states
   const [deleteItem, setDeleteItem] = React.useState("")
+
   const [rows, setRows] = React.useState([])
   const [snackDeleteProduct, setSnackDeleteProduct] = React.useState(false)
   const [snackShow, setSnackShow] = React.useState(false)
@@ -30,9 +31,6 @@ export default function adminProducts() {
       .delete()
       .eq("uniqueId", productId)
 
-    if (data) console.log(data)
-    else console.log(error)
-
     handleClose()
     fetchProducts()
     setSnackDeleteProduct(true)
@@ -43,8 +41,6 @@ export default function adminProducts() {
       .from("products")
       .update(editedProduct)
       .eq("uniqueId", editedProduct.uniqueId)
-    if (error) console.log(error)
-    else console.log(data)
     fetchProducts()
     setEditSnack(true)
   }
@@ -82,6 +78,11 @@ export default function adminProducts() {
       headerAlign: "center",
       cellClassName: "class-price",
       valueFormatter: ({ value }) => `${formatCurrency(value)}`,
+      preProcessEditCellProps: (params) => {
+        const hasError = params.props.value < 0
+        const hasError2 = params.props.value === null
+        return { ...params.props, error: hasError || hasError2 }
+      },
     },
     {
       field: "exist",
@@ -89,6 +90,13 @@ export default function adminProducts() {
       flex: 0.6,
       headerAlign: "center",
       editable: true,
+      type: "number",
+      cellClassName: "class-price",
+      preProcessEditCellProps: (params) => {
+        const hasError = params.props.value < 0
+        const hasError2 = params.props.value === null
+        return { ...params.props, error: hasError || hasError2 }
+      },
     },
     {
       field: "categoryName",
@@ -109,6 +117,10 @@ export default function adminProducts() {
           {value}
         </p>
       ),
+      preProcessEditCellProps: (params) => {
+        const hasError = params.props.value.length < 3
+        return { ...params.props, error: hasError }
+      },
     },
   ]
 
@@ -228,7 +240,9 @@ export default function adminProducts() {
         onClose={() => setSnackShow(false)}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert severity="success">کالا به لیست محصولات اضافه شد</Alert>
+        <Alert severity="success">
+          کالا با موفقیت به لیست محصولات اضافه شد
+        </Alert>
       </Snackbar>
       <Snackbar
         open={snackDeleteProduct}
