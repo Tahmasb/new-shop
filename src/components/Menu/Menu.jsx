@@ -7,9 +7,9 @@ import {
   Typography,
 } from "@mui/material"
 import { FcExpand } from "react-icons/fc"
-import styles from "./menu.module.css"
+import "./menu.css"
+import { useTheme } from "@mui/material/styles"
 import { Link } from "react-router-dom"
-import { BsGridFill } from "react-icons/bs"
 export default function Menu(props) {
   const allCategorys = JSON.parse(window.localStorage.getItem("all-categorys"))
   const allProducts = JSON.parse(window.localStorage.getItem("all-products"))
@@ -17,6 +17,8 @@ export default function Menu(props) {
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false)
   }
+  const theme = useTheme()
+  console.log(theme.palette.primary.main)
   return (
     <Grid>
       {allCategorys.map((category, index) => (
@@ -27,7 +29,7 @@ export default function Menu(props) {
         >
           <AccordionSummary expandIcon={<FcExpand />}>
             <Link
-              className={styles.categoryName}
+              className={"category-name"}
               to={`/category/${category.categoryId}`}
             >
               {category.categoryName}
@@ -36,14 +38,14 @@ export default function Menu(props) {
           <AccordionDetails>
             {allProducts.map((product, indexx) =>
               product.categoryId === category.categoryId ? (
-                <li key={indexx}>
-                  <Link
-                    className={styles.categoryItem}
-                    to={`/product/${product.categoryId}${product.uniqueId}`}
-                  >
-                    {product.title}
-                  </Link>
-                </li>
+                <Link
+                  key={indexx}
+                  className={"category-item"}
+                  // style={{ color: theme.palette.primary.dark }}
+                  to={`/product/${product.categoryId}${product.uniqueId}`}
+                >
+                  <Typography>{product.title}</Typography>
+                </Link>
               ) : null
             )}
           </AccordionDetails>
@@ -52,35 +54,3 @@ export default function Menu(props) {
     </Grid>
   )
 }
-
-// <li key={index}>
-//   <ul>
-//     <Typography onClick={(prev) => props.close(!prev)}>
-//       <Link
-//         className={styles.categoryName}
-//         to={`/category/${category.categoryId}`}
-//       >
-//         <BsGridFill />
-//         {category.categoryName}
-//       </Link>
-//     </Typography>
-//     {allProducts.map((product, indexx) =>
-//       product.categoryId === category.categoryId ? (
-//         <li className={styles.categoryItem} key={indexx}>
-//           <Link
-//             style={{
-//               display: "block",
-//               padding: "0.7rem",
-//               paddingLeft: "6rem",
-//               paddingRight: "1rem",
-//               fontFamily: "vazir",
-//             }}
-//             to={`/product/${product.categoryId}${product.uniqueId}`}
-//           >
-//             {product.title}
-//           </Link>
-//         </li>
-//       ) : null
-//     )}
-//   </ul>
-// </li>

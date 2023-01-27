@@ -17,17 +17,22 @@ export default function PrivateRoute({ children }) {
         p={2.3}
         display="flex"
         // columnGap={5}
+        bgcolor={"#0099ff"}
         justifyContent="space-between"
       >
-        <Typography sx={{ display: { xs: "none", md: "flex" } }} variant="h6">
+        <Typography
+          color="white"
+          sx={{ display: { xs: "none", md: "flex" } }}
+          variant="h6"
+        >
           پنل مدیریت فروشگاه
         </Typography>
         <Grid
           display="flex"
-          border={1}
+          border={2}
           p={0.6}
           columnGap={1}
-          borderColor={"#0099ff"}
+          borderColor={"white"}
           borderRadius={"5px"}
         >
           <NavLink
@@ -36,7 +41,7 @@ export default function PrivateRoute({ children }) {
           >
             محصولات
           </NavLink>
-          <Divider orientation="vertical" />
+          <Divider sx={{ bgcolor: "white" }} orientation="vertical" />
           <NavLink to={"orders"}>سفارش‌ها</NavLink>
         </Grid>
 

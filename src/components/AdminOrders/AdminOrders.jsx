@@ -114,7 +114,8 @@ export default function AdminOrders() {
                     <Grid
                       justifyContent="end"
                       columnGap={0.3}
-                      display="flex"
+                      display="inline-flex"
+                      p={0.2}
                       alignItems={"center"}
                     >
                       <Typography variant="body2">تاریخ</Typography>

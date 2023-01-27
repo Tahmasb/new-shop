@@ -50,8 +50,6 @@ export default function Header() {
         alignItems="center"
         py={1.3}
         justifyContent="space-between"
-        className="header-background"
-        sx={{ bgcolor: "" }}
       >
         <Modal
           open={loginModal}
@@ -138,7 +136,7 @@ export default function Header() {
           </Link>
         </Grid>
       </Grid>
-      <Grid container sx={{ bgcolor: "lightgreen" }}>
+      <Grid container sx={{ bgcolor: "#76ff03" }}>
         {searchResult2.map((product, index) => (
           <Product key={index} numShow={3} productTitle={product.title} />
         ))}

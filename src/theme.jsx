@@ -10,6 +10,9 @@ const cacheRTL = createCache({
 
 const theme = createTheme({
   direction: "rtl",
+  // palette: {
+  //   mode: "dark",
+  // },
   breakpoints: {
     values: { xs: 0, s: 370, sm: 600, md: 900, lg: 1200, xl: 1536 },
   },
@@ -25,7 +28,7 @@ const theme = createTheme({
         },
       },
     },
-
+    //  تغییر تم سایت با میوای
     // MuiTooltip: {
     //   styleOverrides: {
     //     tooltip: {

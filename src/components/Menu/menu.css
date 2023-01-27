@@ -1,0 +1,16 @@
+.category-item {
+  font-family: vazir;
+  display: block;
+  white-space: nowrap;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 7rem;
+  margin-right: 5px;
+}
+
+.muirtl-1elwnq4-MuiPaper-root-MuiAccordion-root.Mui-expanded {
+  margin: 0px !important;
+}
+.category-name {
+  color: #0099ff;
+}
