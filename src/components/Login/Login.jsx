@@ -23,6 +23,7 @@ import {
 import { useState, useContext } from "react"
 import { ProductsContext } from "./.."
 export default function Login(props) {
+  const [disabledButtom, setDisabledButtom] = useState(false)
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const context = useContext(ProductsContext)
@@ -45,10 +46,12 @@ export default function Login(props) {
   const [snackLoginShow, setSnackLoginShow] = useState(false)
 
   const login = async () => {
+    setDisabledButtom(true)
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
+    setDisabledButtom(false)
     if (error) {
       setSnackLoginShow(true)
     } else {
@@ -138,8 +141,9 @@ export default function Login(props) {
             }}
             variant="contained"
             size="large"
-            disabled={!formik.isValid}
+            disabled={!formik.isValid || disabledButtom}
           >
+            {console.log(!formik.isValid)}
             ورود
           </Button>
           <Grid>
