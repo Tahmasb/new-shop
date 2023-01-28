@@ -2,12 +2,14 @@ import { ThemeProvider } from "@mui/material/styles"
 import { theme, cacheRTL } from "./theme"
 import { CacheProvider } from "@emotion/react"
 import { HelmetProvider, Helmet } from "react-helmet-async"
-import { useRoutes } from "react-router-dom"
+import { useRoutes, useLocation } from "react-router-dom"
 import { ProductsProvider } from "./context/ProductContext"
 import routes from "./routes"
 import { useEffect } from "react"
+import { AnimatePresence } from "framer-motion"
 export default function App() {
-  const route = useRoutes(routes)
+  const location = useLocation()
+  const route = useRoutes(routes, location)
   useEffect(() => {}, [])
   return (
     <>
@@ -18,7 +20,7 @@ export default function App() {
               <Helmet>
                 <title>فروشگاه لورم</title>
               </Helmet>
-              {route}
+              <AnimatePresence mode="wait">{route}</AnimatePresence>
             </HelmetProvider>
           </ProductsProvider>
         </ThemeProvider>

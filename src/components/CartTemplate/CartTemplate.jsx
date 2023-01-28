@@ -9,6 +9,7 @@ import {
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { ProductsContext } from "./../"
+import { motion } from "framer-motion"
 // import dish from "./../../assets/img/dish.jpg"
 import { formatCurrency, addProduct } from "./../../utils"
 
@@ -16,6 +17,14 @@ export default function CartTemplate(props) {
   let context = useContext(ProductsContext)
   return (
     <Grid
+      component={motion.div}
+      initial={{ opacity: 0.8, scale: 0.8, y: 40 }}
+      animate={{ opacity: 1, scale: 1, y: 0, transition: { duration: 1 } }}
+      whileHover={{
+        scale: 1.02,
+        transition: { duration: 0.4 },
+      }}
+      exit={{ scale: 0.8, opacity: 0.8 }}
       display="flex"
       p={0.5}
       justifyContent={"space-between"}

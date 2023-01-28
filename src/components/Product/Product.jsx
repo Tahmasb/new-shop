@@ -1,11 +1,4 @@
-import {
-  Grid,
-  Card,
-  CardContent,
-  useMediaQuery,
-  CardMedia,
-  Typography,
-} from "@mui/material"
+import { Grid, Card, CardContent, CardMedia, Typography } from "@mui/material"
 
 import { BsStar } from "react-icons/bs"
 import { motion } from "framer-motion"
@@ -13,7 +6,9 @@ import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { formatCurrency } from "./../../utils"
 import "./product.css"
+import React from "react"
 export default function Product(props) {
+  let [state, setState] = React.useState(false)
   let rows = []
   JSON.parse(window.localStorage.getItem("all-products")).map((product) => {
     if (product.categoryName === props.categoryName) rows.push(product)
@@ -21,6 +16,9 @@ export default function Product(props) {
     else null
   })
 
+  React.useEffect(() => {
+    setState(!state)
+  }, [])
   return (
     <>
       {rows.map((product, index) =>
@@ -33,8 +31,10 @@ export default function Product(props) {
             animate={{ scale: 1 }}
             initial={{ scale: 0.7 }}
             whileHover={{
-              scale: 1.06,
+              scale: 1.05,
             }}
+            // exit={{ scale: 0, opacity: 0 }}
+            // transition={{ duration: 5 }}
             p={0.4}
             lg={props.lg}
             md={props.md}

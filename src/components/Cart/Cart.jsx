@@ -26,7 +26,6 @@ const GridCus2 = styled(Grid)`
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 1rem;
   margin-bottom: 1.2rem;
 `
 export default function Cart() {

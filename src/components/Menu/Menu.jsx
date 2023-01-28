@@ -17,8 +17,6 @@ export default function Menu(props) {
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false)
   }
-  const theme = useTheme()
-  console.log(theme.palette.primary.main)
   return (
     <Grid>
       {allCategorys.map((category, index) => (
