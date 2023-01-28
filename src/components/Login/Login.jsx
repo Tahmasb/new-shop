@@ -28,8 +28,8 @@ export default function Login(props) {
   const context = useContext(ProductsContext)
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: "hggvff222@gmail.com",
+      password: "aliALI22",
     },
     onSubmit: (values) => {
       login()
