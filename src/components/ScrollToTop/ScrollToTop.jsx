@@ -26,7 +26,7 @@ export default function ScrollToTop() {
         style={{
           position: "fixed",
           bottom: "20px",
-          left: "20px",
+          right: "20px",
           zIndex: "3",
           fontSize: "2.5rem",
           backgroundColor: "#A2D9FF",
@@ -36,7 +36,7 @@ export default function ScrollToTop() {
         sx={myStyleClassName}
       >
         <IoIosArrowUp
-          onClick={() => window.scrollTo(0, 0)}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           style={
             sitePosition
               ? {

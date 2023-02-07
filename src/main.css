@@ -15,6 +15,9 @@
 * {
   font-family: "IRANSansWebFaNum";
 }
+html {
+  scroll-behavior: smooth !important;
+}
 
 body {
   padding: 0;

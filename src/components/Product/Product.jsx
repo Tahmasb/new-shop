@@ -47,8 +47,10 @@ export default function Product(props) {
                 <Grid p={1.2}>
                   <CardMedia
                     src={product.img}
-                    sx={{ objectFit: "contain" }}
                     component="img"
+                    sx={{ objectFit: "contain" }}
+                    width={"800px"}
+                    // height="100%"
                     alt="product image"
                   />
                 </Grid>
@@ -64,7 +66,9 @@ export default function Product(props) {
                   justifyContent="space-between"
                 >
                   <Grid display="flex" justifyContent={"space-between"}>
-                    <Link to={`/product/${product.uniqueId}`}>
+                    <Link
+                      to={`/product/${product.categoryId}${product.uniqueId}`}
+                    >
                       <Typography sx={{ fontFamily: "vazir" }} variant="body2">
                         {product.title}
                       </Typography>

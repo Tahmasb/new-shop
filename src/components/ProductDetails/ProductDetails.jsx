@@ -8,13 +8,14 @@ import {
   Typography,
   Alert,
   Link,
+  Checkbox,
 } from "@mui/material"
 import { Helmet } from "react-helmet-async"
 import useCounter from "./../../customHooks/useCounter"
 import { useContext, useState } from "react"
 import { useParams } from "react-router-dom"
 import { ProductsContext } from "./../index"
-import { MdOutlineFavoriteBorder } from "react-icons/md"
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md"
 import { BsShare } from "react-icons/bs"
 import { IoMdNotificationsOutline } from "react-icons/io"
 import { BiMessageSquareAdd } from "react-icons/bi"
@@ -25,6 +26,7 @@ import {
   removeProduct,
   addFavorite,
   addNextList,
+  removeFavorite,
 } from "./../../utils"
 // import dish from "./../../assets/img/dish.jpg"
 import { ScrollToTop } from "./../"
@@ -49,6 +51,13 @@ export default function ProductDetails() {
   )
   let result = numCart && inCart.length > 0 ? inCart[0].count : 0
   let [count, addCount, minusCount] = useCounter(result)
+  let [isFavorite, setIsFavorite] = useState(
+    context.favorite.find(
+      (product) => product.uniqueId === selectProduct.uniqueId
+    )
+  )
+  // console.log(Boolean(isFavorite))
+
   // snack state
   let [openSnackShare, setOpenSnackShare] = useState(false)
   let [openSnackFavorite, setOpenSnackFavorite] = useState(false)
@@ -83,6 +92,7 @@ export default function ProductDetails() {
           flex={0.1}
           p={1}
           ml={1.1}
+          alignItems={"center"}
           sx={{
             flexDirection: { xs: "row", md: "column" },
             justifyContent: { xs: "start", md: "center" },
@@ -97,36 +107,27 @@ export default function ProductDetails() {
               }}
             >
               <BsShare />
-              <Snackbar
-                autoHideDuration={3000}
-                message="لینک این کالا کپی شد :)"
-                open={openSnackShare}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                onClose={() => {
-                  setOpenSnackShare(false)
-                }}
-              />
             </Link>
           </Tooltip>
 
           <Tooltip placement="top" title="افزودن به علاقه مندی‌ها">
             <Link
               onClick={() => {
-                setOpenSnackFavorite(true)
-                addFavorite(context, selectProduct)
+                if (!isFavorite) {
+                  setIsFavorite(!isFavorite)
+                  addFavorite(context, selectProduct)
+                  setOpenSnackFavorite(true)
+                } else {
+                  removeFavorite(context, selectProduct.uniqueId)
+                  setIsFavorite(!isFavorite)
+                }
               }}
             >
-              <MdOutlineFavoriteBorder />
-              <Snackbar
-                autoHideDuration={3000}
-                open={openSnackFavorite}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                onClose={() => {
-                  setOpenSnackFavorite(false)
-                }}
-              >
-                <Alert severity="success">به علاقه مندی‌هات اضافه شد</Alert>
-              </Snackbar>
+              <Checkbox
+                checked={Boolean(isFavorite)}
+                icon={<MdOutlineFavoriteBorder style={{ color: "#448fda" }} />}
+                checkedIcon={<MdOutlineFavorite style={{ color: "red" }} />}
+              />
             </Link>
           </Tooltip>
           <Tooltip placement="top" title="قیمت تغییر کرد بهت خبر میدیم">
@@ -136,15 +137,6 @@ export default function ProductDetails() {
               }}
             >
               <IoMdNotificationsOutline />
-              <Snackbar
-                autoHideDuration={3000}
-                message="قیمت تغییر کرد برات ایمیل میزنیم حتما :)"
-                open={openSnackNotif}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                onClose={() => {
-                  setOpenSnackNotif(false)
-                }}
-              />
             </Link>
           </Tooltip>
           <Tooltip placement="top" title="اضافه کردن به لیست خرید بعدی">
@@ -155,17 +147,6 @@ export default function ProductDetails() {
               }}
             >
               <BiMessageSquareAdd />
-              <Snackbar
-                autoHideDuration={3000}
-                message="به لیست خرید بعدیت اضافه شد"
-                open={openSnackAddList}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                onClose={() => {
-                  setOpenSnackAddList(false)
-                }}
-              >
-                <Alert severity="success">به لیست خرید بعدی اضافه شد</Alert>
-              </Snackbar>
             </Link>
           </Tooltip>
         </Grid>
@@ -255,6 +236,46 @@ export default function ProductDetails() {
           <Typography>گرافیک : ۱۰۰۰۰</Typography>
         </Grid>
       </Grid>
+      {/*  Snackbars  */}
+      <Snackbar
+        autoHideDuration={3000}
+        open={openSnackFavorite}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        onClose={() => {
+          setOpenSnackFavorite(false)
+        }}
+      >
+        <Alert severity="success">به علاقه مندی‌هات اضافه شد</Alert>
+      </Snackbar>
+      <Snackbar
+        autoHideDuration={3000}
+        message="به لیست خرید بعدیت اضافه شد"
+        open={openSnackAddList}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        onClose={() => {
+          setOpenSnackAddList(false)
+        }}
+      >
+        <Alert severity="success">به لیست خرید بعدی اضافه شد</Alert>
+      </Snackbar>
+      <Snackbar
+        autoHideDuration={3000}
+        message="لینک این کالا کپی شد :)"
+        open={openSnackShare}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        onClose={() => {
+          setOpenSnackShare(false)
+        }}
+      />
+      <Snackbar
+        autoHideDuration={3000}
+        message="قیمت تغییر کرد برات ایمیل میزنیم حتما :)"
+        open={openSnackNotif}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        onClose={() => {
+          setOpenSnackNotif(false)
+        }}
+      />
     </>
   )
 }
