@@ -7,9 +7,18 @@
 }
 .end-price-child {
   border-radius: 5rem;
+  display: flex;
+  align-items: center;
   padding: 1rem;
-  background-color: var(--lightGray);
+  background-color: white;
   cursor: pointer;
-  min-width: 9rem;
-  text-align: center;
+  justify-content: center;
+}
+.price {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 5rem;
+  min-width: 8rem;
+  display: flex;
+  justify-content: center;
 }

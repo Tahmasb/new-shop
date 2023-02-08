@@ -147,7 +147,7 @@ export default function adminProducts() {
           position="relative"
         >
           <IoMdClose
-            onClick={() => props.closeModal(false)}
+            onClick={() => setOpenModalDelete(false)}
             style={{
               position: "absolute",
               top: "7px",
@@ -157,8 +157,8 @@ export default function adminProducts() {
             }}
           />
           <Typography textAlign={"center"}>
-            مطمئنی میخای{" "}
-            <span style={{ color: "red", fontSize: "1rem" }}>{deleteItem}</span>{" "}
+            مطمئنی میخای
+            <span style={{ color: "red", fontSize: "1rem" }}>{deleteItem}</span>
             حذفش کنی؟
           </Typography>
           <Grid display="flex" justifyContent={"center"} columnGap={8}>

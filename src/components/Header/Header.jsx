@@ -136,7 +136,7 @@ export default function Header() {
           </Link>
         </Grid>
       </Grid>
-      <Grid container sx={{ bgcolor: "#76ff03" }}>
+      <Grid container sx={{ bgcolor: "#18144d" }}>
         {searchResult2.map((product, index) => (
           <Product key={index} numShow={3} productTitle={product.title} />
         ))}

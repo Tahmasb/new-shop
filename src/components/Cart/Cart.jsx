@@ -16,6 +16,7 @@ import {
   removeNextList,
 } from "./../../utils"
 import { useNavigate } from "react-router-dom"
+import { BsArrowLeft } from "react-icons/bs"
 
 const TypographyCus = styled(Typography)`
   padding: 1rem;
@@ -80,6 +81,9 @@ export default function Cart() {
                   ))}
                 </Grid>
                 <Grid
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
                   sx={{
                     position: { xs: "fixed", md: "absolute" },
                     bottom: { xs: "0px", md: "0px" },
@@ -94,7 +98,11 @@ export default function Cart() {
                     }}
                     className={styles.endPriceChild}
                   >
-                    نهایی کردن خرید : {formatCurrency(allPrice)} تومان
+                    نهایی کردن خرید
+                    <BsArrowLeft style={{ marginRight: "6px" }} />
+                  </Typography>
+                  <Typography className={styles.price}>
+                    {formatCurrency(allPrice)} تومان
                   </Typography>
                 </Grid>
               </>

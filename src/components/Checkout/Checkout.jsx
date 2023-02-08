@@ -70,6 +70,7 @@ export default function Checkout(props) {
             <Grid m="auto" item xs={12} sm={8} md={6} p={3}>
               <Typography mb={1.5}>نام</Typography>
               <TextField
+                autoComplete="off"
                 {...formik.getFieldProps("name")}
                 autoFocus
                 fullWidth

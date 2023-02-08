@@ -33,24 +33,22 @@ export default function Product(props) {
             whileHover={{
               scale: 1.05,
             }}
+            display="flex"
+            p={0.4}
             // exit={{ scale: 0, opacity: 0 }}
             // transition={{ duration: 5 }}
-            p={0.4}
-            lg={props.lg}
-            md={props.md}
-            sm={4}
             xs={6}
-            display="flex"
+            sm={4}
+            md={props.md}
+            lg={props.lg}
           >
-            <Card>
+            <Card style={{ width: "100%", minHeight: "36vh" }}>
               <Link to={`/product/${product.categoryId}${product.uniqueId}`}>
-                <Grid p={1.2}>
+                <Grid display="flex" p={1.2}>
                   <CardMedia
                     src={product.img}
                     component="img"
                     sx={{ objectFit: "contain" }}
-                    width={"800px"}
-                    // height="100%"
                     alt="product image"
                   />
                 </Grid>

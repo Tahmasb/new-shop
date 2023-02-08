@@ -92,7 +92,7 @@ export default function ProductDetails() {
           flex={0.1}
           p={1}
           ml={1.1}
-          alignItems={"center"}
+          alignItems={"flex-end"}
           sx={{
             flexDirection: { xs: "row", md: "column" },
             justifyContent: { xs: "start", md: "center" },
@@ -124,6 +124,7 @@ export default function ProductDetails() {
               }}
             >
               <Checkbox
+                sx={{ px: "3px" }}
                 checked={Boolean(isFavorite)}
                 icon={<MdOutlineFavoriteBorder style={{ color: "#448fda" }} />}
                 checkedIcon={<MdOutlineFavorite style={{ color: "red" }} />}
