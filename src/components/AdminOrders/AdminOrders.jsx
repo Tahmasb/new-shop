@@ -32,7 +32,7 @@ export default function AdminOrders() {
   }
   React.useEffect(() => {
     fetchOrders()
-  }, [])
+  })
   if (orders.length < 1 && showProgress === false) {
     return (
       <div className="error-conection">لطفا اتصال اینترنت را بررسی کنید</div>

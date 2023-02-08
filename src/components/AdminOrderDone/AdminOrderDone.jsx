@@ -11,7 +11,7 @@ import {
   Button,
 } from "@mui/material"
 import { styled } from "@mui/system"
-import styles from "./adminOrderDone.module.css"
+// import styles from "./adminOrderDone.module.css"
 import { supabase } from "../../CreateClient"
 import { IoMdClose } from "react-icons/io"
 import persian from "react-date-object/calendars/persian"
@@ -25,10 +25,7 @@ export default function AdminOrderDone(props) {
       .from("orders")
       .update({ delivered: true })
       .eq("id", orderId)
-    if (error) console.log(error)
-    if (data) console.log(data)
   }
-
   const TableCellCus = styled(TableCell)`
     color: #f4f2ef;
   `
@@ -72,7 +69,6 @@ export default function AdminOrderDone(props) {
           <Typography>
             نام مشتری:
             <span>
-              {" "}
               {`${props.customOrder.customerInfo.name} ${props.customOrder.customerInfo.family}`}
             </span>
           </Typography>
