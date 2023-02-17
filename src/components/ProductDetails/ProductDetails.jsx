@@ -45,6 +45,7 @@ export default function ProductDetails() {
       ? (selectProduct = product)
       : null
   })
+  selectProduct = selectProduct || allProducts[1]
   let numCart = cartItems.length
 
   let inCart = cartItems.filter(
@@ -122,7 +123,7 @@ export default function ProductDetails() {
               }}
             >
               <Checkbox
-                sx={{ px: "3px" }}
+                sx={{ px: "2px" }}
                 checked={Boolean(isFavorite)}
                 icon={<MdOutlineFavoriteBorder style={{ color: "#448fda" }} />}
                 checkedIcon={<MdOutlineFavorite style={{ color: "red" }} />}

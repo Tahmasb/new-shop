@@ -16,11 +16,11 @@ export default function Categorys() {
   }, [])
   let allCategorys = useSelector((state) => state.products.categories)
 
-  // if (categorys.length < 1 && skeleton === false) {
-  //   return (
-  //     <div className="error-conection">لطفا اتصال اینترنت را بررسی کنید</div>
-  //   )
-  // }
+  if (allCategorys === null) {
+    return (
+      <div className="error-conection">لطفا اتصال اینترنت را بررسی کنید</div>
+    )
+  }
   return (
     <>
       {loading ? (

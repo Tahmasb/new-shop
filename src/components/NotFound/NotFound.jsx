@@ -11,7 +11,7 @@ export default function NotFound() {
       mt={"25vh"}
       rowGap={5}
     >
-      <Typography mx={1}>
+      <Typography textAlign={"center"} mx={1}>
         همچین آدرسی نداریم انصافا، اگه میخای بری صفحه اصلی این پایین کلیک کن
       </Typography>
       <Button variant="contained">
