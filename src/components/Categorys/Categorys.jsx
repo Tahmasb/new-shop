@@ -1,39 +1,32 @@
+import { getProducts, getCategories } from "../../store/thunks/productsThunks"
 import { Grid, Tooltip } from "@mui/material"
 import { Product, Skeleton, ScrollToTop } from ".."
 import React from "react"
 import { MdArrowLeft } from "react-icons/md"
 import { Link } from "react-router-dom"
 import styles from "./Categorys.module.css"
-import { supabase } from "../../CreateClient"
-export default function Categorys() {
-  React.useEffect(() => {
-    fetchUsers()
-  }, [])
-  const [skeleton, setSkeleton] = React.useState(true)
-  const [categorys, setCategorys] = React.useState([])
+import { useDispatch, useSelector } from "react-redux"
 
-  async function fetchUsers() {
-    let { data: products } = await supabase.from("products").select("*")
-    let { data: categorys } = await supabase.from("categorys").select("*")
-    setCategorys(categorys || [])
-    window.localStorage.setItem("all-products", JSON.stringify(products || []))
-    window.localStorage.setItem(
-      "all-categorys",
-      JSON.stringify(categorys || [])
-    )
-    setSkeleton(false)
-  }
-  if (categorys.length < 1 && skeleton === false) {
-    return (
-      <div className="error-conection">لطفا اتصال اینترنت را بررسی کنید</div>
-    )
-  }
+export default function Categorys() {
+  let loading = useSelector((state) => state.products.loading)
+  const dispatch = useDispatch()
+  React.useEffect(() => {
+    dispatch(getCategories())
+    dispatch(getProducts())
+  }, [])
+  let allCategorys = useSelector((state) => state.products.categories)
+
+  // if (categorys.length < 1 && skeleton === false) {
+  //   return (
+  //     <div className="error-conection">لطفا اتصال اینترنت را بررسی کنید</div>
+  //   )
+  // }
   return (
     <>
-      {skeleton ? (
+      {loading ? (
         <Skeleton />
       ) : (
-        categorys.map((category, index) => (
+        allCategorys.map((category, index) => (
           <React.Fragment key={index}>
             <Grid className={styles.parentCategoryTitle}>
               <Tooltip title={`برو تو دسته بندی ${category.categoryName}`}>

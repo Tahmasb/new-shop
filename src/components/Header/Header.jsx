@@ -14,23 +14,21 @@ import { BsCart, BsSearch } from "react-icons/bs"
 import { AiOutlineUser } from "react-icons/ai"
 import "./header.css"
 import * as React from "react"
-import ProductsContext from "../../context/ProductContext"
 import { useLocation } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { getCookie } from "../../utils"
 
 export default function Header() {
   let location = useLocation()
   const [inputValue, setInputValue] = React.useState("")
-  let localStorageCart =
-    JSON.parse(window.localStorage.getItem("cart-items")) || []
-  let localStorageProducts =
-    JSON.parse(window.localStorage.getItem("all-products")) || []
-  const context = React.useContext(ProductsContext)
+  let cartItems = useSelector((state) => state.products.cartItems)
+  let products = useSelector((state) => state.products.products)
   let [loginModal, setLoginModal] = React.useState(false)
   const [searchResult2, setSearchResult2] = React.useState([])
 
   const searchProduct = (e) => {
     setSearchResult2(
-      localStorageProducts
+      products
         .filter((product) => {
           return product.title.includes(e)
         })
@@ -112,7 +110,7 @@ export default function Header() {
         >
           <Tooltip title="پنل ادمین">
             <Link
-              to={context.isUserLogin && "/admin/products"}
+              to={getCookie("user-email") && "/admin/products"}
               onClick={() => {
                 setLoginModal(true)
               }}
@@ -123,7 +121,7 @@ export default function Header() {
           <Link to={"/cart"}>
             <Tooltip title="برو تو سبد خرید">
               <Badge
-                badgeContent={localStorageCart.length || 0}
+                badgeContent={cartItems.length || 0}
                 color="success"
                 anchorOrigin={{
                   vertical: "top",

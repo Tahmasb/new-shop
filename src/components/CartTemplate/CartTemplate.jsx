@@ -1,20 +1,12 @@
-import {
-  Button,
-  ButtonGroup,
-  CardMedia,
-  Fade,
-  Grid,
-  Typography,
-} from "@mui/material"
-import { useContext } from "react"
+import { addCart } from "./../../store/features/productsSlice"
+import { useDispatch } from "react-redux"
+import { Button, ButtonGroup, CardMedia, Grid, Typography } from "@mui/material"
 import { Link } from "react-router-dom"
-import { ProductsContext } from "./../"
 import { motion } from "framer-motion"
-// import dish from "./../../assets/img/dish.jpg"
-import { formatCurrency, addProduct } from "./../../utils"
+import { formatCurrency } from "./../../utils"
 
 export default function CartTemplate(props) {
-  let context = useContext(ProductsContext)
+  const dispatch = useDispatch()
   return (
     <Grid
       component={motion.div}
@@ -71,7 +63,7 @@ export default function CartTemplate(props) {
           <ButtonGroup orientation="vertical">
             <Button
               onClick={() => {
-                addProduct(context, props.cartItem)
+                dispatch(addCart(props.cartItem))
               }}
               size="small"
               color="primary"
@@ -81,7 +73,7 @@ export default function CartTemplate(props) {
             </Button>
             <Button
               onClick={() => {
-                props.info.func(context, props.cartItem.uniqueId)
+                dispatch(props.info.func(props.cartItem.uniqueId))
               }}
               size="small"
               color="error"

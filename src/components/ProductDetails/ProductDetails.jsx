@@ -1,4 +1,13 @@
 import {
+  addFavorite,
+  deleteFavorite,
+  addNextList,
+  addCart,
+  deleteCart,
+  deleteNextList,
+} from "./../../store/features/productsSlice"
+import { useSelector, useDispatch } from "react-redux"
+import {
   Button,
   Snackbar,
   Tooltip,
@@ -12,51 +21,40 @@ import {
 } from "@mui/material"
 import { Helmet } from "react-helmet-async"
 import useCounter from "./../../customHooks/useCounter"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { useParams } from "react-router-dom"
-import { ProductsContext } from "./../index"
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md"
 import { BsShare } from "react-icons/bs"
 import { IoMdNotificationsOutline } from "react-icons/io"
 import { BiMessageSquareAdd } from "react-icons/bi"
 import styles from "./productDetails.module.css"
-import {
-  formatCurrency,
-  addProduct,
-  removeProduct,
-  addFavorite,
-  addNextList,
-  removeFavorite,
-} from "./../../utils"
-// import dish from "./../../assets/img/dish.jpg"
+import { formatCurrency } from "./../../utils"
 import { ScrollToTop } from "./../"
 
 export default function ProductDetails() {
-  let allProducts = JSON.parse(window.localStorage.getItem("all-products"))
-  let localStorageCart =
-    JSON.parse(window.localStorage.getItem("cart-items")) || []
+  const dispatch = useDispatch()
+  let allProducts = useSelector((state) => state.products.products)
+  let allFavorites = useSelector((state) => state.products.favorites)
+
+  let cartItems = useSelector((state) => state.products.cartItems)
   const params = useParams()
-  const context = useContext(ProductsContext)
-  // find select product from context
+  // find select product from store
   let selectProduct
   allProducts.map((product) => {
     ;`${product.categoryId}${product.uniqueId}` === params.productID
       ? (selectProduct = product)
       : null
   })
-  let numCart = localStorageCart.length
+  let numCart = cartItems.length
 
-  let inCart = localStorageCart.filter(
+  let inCart = cartItems.filter(
     (item) => item.uniqueId === selectProduct.uniqueId
   )
   let result = numCart && inCart.length > 0 ? inCart[0].count : 0
   let [count, addCount, minusCount] = useCounter(result)
   let [isFavorite, setIsFavorite] = useState(
-    context.favorite.find(
-      (product) => product.uniqueId === selectProduct.uniqueId
-    )
+    allFavorites.find((product) => product.uniqueId === selectProduct.uniqueId)
   )
-  // console.log(Boolean(isFavorite))
 
   // snack state
   let [openSnackShare, setOpenSnackShare] = useState(false)
@@ -115,10 +113,10 @@ export default function ProductDetails() {
               onClick={() => {
                 if (!isFavorite) {
                   setIsFavorite(!isFavorite)
-                  addFavorite(context, selectProduct)
+                  dispatch(addFavorite(selectProduct))
                   setOpenSnackFavorite(true)
                 } else {
-                  removeFavorite(context, selectProduct.uniqueId)
+                  dispatch(deleteFavorite(selectProduct.uniqueId))
                   setIsFavorite(!isFavorite)
                 }
               }}
@@ -144,7 +142,7 @@ export default function ProductDetails() {
             <Link
               onClick={() => {
                 setOpenSnackAddList(true)
-                addNextList(context, selectProduct)
+                dispatch(addNextList(selectProduct))
               }}
             >
               <BiMessageSquareAdd />
@@ -176,7 +174,7 @@ export default function ProductDetails() {
               <Button
                 onClick={() => {
                   addCount()
-                  addProduct(context, selectProduct)
+                  dispatch(addCart(selectProduct))
                 }}
                 variant="contained"
               >
@@ -186,7 +184,7 @@ export default function ProductDetails() {
               <Button
                 onClick={() => {
                   minusCount()
-                  removeProduct(context, selectProduct.uniqueId)
+                  dispatch(deleteCart(selectProduct.uniqueId))
                 }}
                 variant="contained"
               >
@@ -197,7 +195,7 @@ export default function ProductDetails() {
               variant="contained"
               onClick={() => {
                 addCount()
-                addProduct(context, selectProduct, 5)
+                dispatch(addCart(selectProduct))
               }}
               sx={{ display: count ? "none" : "block" }}
             >

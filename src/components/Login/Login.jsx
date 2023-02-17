@@ -20,13 +20,11 @@ import {
   MdOutlineVisibilityOff,
   MdAlternateEmail,
 } from "react-icons/md"
-import { useState, useContext } from "react"
-import { ProductsContext } from "./.."
+import { useState } from "react"
 export default function Login(props) {
   const [disabledButtom, setDisabledButtom] = useState(false)
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
-  const context = useContext(ProductsContext)
   const formik = useFormik({
     initialValues: {
       email: "hggvff222@gmail.com",
@@ -56,7 +54,6 @@ export default function Login(props) {
       setSnackLoginShow(true)
     } else {
       setCookie("user-email", data.user.email, 2)
-      context.setIsUserLogin(true)
       navigate("/admin/products")
     }
   }

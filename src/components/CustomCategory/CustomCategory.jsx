@@ -5,11 +5,13 @@ import { Helmet } from "react-helmet-async"
 import styles from "./../Categorys/Categorys.module.css"
 import { AiOutlineMenu } from "react-icons/ai"
 import { useState } from "react"
+import { useSelector } from "react-redux"
 
 export default function CustomCategory() {
   const params = useParams()
   let selectCategory
-  JSON.parse(window.localStorage.getItem("all-categorys")).map((category) => {
+  const allCategories = useSelector((state) => state.products.categories)
+  allCategories.map((category) => {
     category.categoryId === params.categoryID
       ? (selectCategory = category)
       : null

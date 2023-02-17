@@ -1,3 +1,5 @@
+import { cleanCart } from "../../store/features/productsSlice"
+import { useDispatch } from "react-redux"
 import {
   Button,
   Grid,
@@ -6,7 +8,7 @@ import {
   useMediaQuery,
 } from "@mui/material"
 import React from "react"
-import { Header, ProductsContext } from "./.."
+import { Header } from "./.."
 import DatePicker from "react-multi-date-picker"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
@@ -14,14 +16,13 @@ import { DateObject } from "react-multi-date-picker"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useNavigate, useLocation, Navigate } from "react-router-dom"
-import { useContext } from "react"
 import { supabase } from "../../CreateClient"
+import { useSelector } from "react-redux"
 export default function Checkout(props) {
-  const pageSize = useMediaQuery("(min-width:600px)")
   const location = useLocation()
   const navigate = useNavigate()
-  const context = useContext(ProductsContext)
-
+  const dispatch = useDispatch()
+  const cartItems = useSelector((state) => state.products.cartItems)
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -36,12 +37,11 @@ export default function Checkout(props) {
       async function addOrder() {
         await supabase
           .from("orders")
-          .insert({ customerInfo: values, cartItems: context.cartItems })
+          .insert({ customerInfo: values, cartItems: cartItems })
       }
       addOrder()
       navigate("/")
-      context.setCartItems([])
-      window.localStorage.setItem("cart-items", JSON.stringify([]))
+      dispatch(cleanCart())
     },
     validationSchema: Yup.object({
       name: Yup.string().required("ضروری").min(2, "حداقل دو کاراکتر"),
@@ -147,12 +147,9 @@ export default function Checkout(props) {
                   onKeyPress={(e) => e.preventDefault()}
                   calendar={persian}
                   locale={persian_fa}
-                  minDate={new DateObject({ calender: persian }).add(
-                    -1,
-                    "days"
-                  )}
+                  minDate={new DateObject({ calender: persian }).add(0, "days")}
                   maxDate={new DateObject({ calender: persian }).add(
-                    10,
+                    15,
                     "days"
                   )}
                 />

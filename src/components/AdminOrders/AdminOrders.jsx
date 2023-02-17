@@ -32,21 +32,23 @@ export default function AdminOrders() {
   }
   React.useEffect(() => {
     fetchOrders()
-  })
+  }, [Boolean(detail)])
+  // برای موقعیتی که نت خرابه هم برنامه داشته باش
   if (orders.length < 1 && showProgress === false) {
     return (
       <div className="error-conection">لطفا اتصال اینترنت را بررسی کنید</div>
     )
   }
+  let resultArr = orders
 
-  let sortArray = [...orders].sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-  )
-  let resultArr
-  sort ? (resultArr = sortArray) : (resultArr = orders)
   currentCheck
     ? (resultArr = resultArr.filter((order) => order.delivered === true))
     : (resultArr = resultArr.filter((order) => order.delivered === false))
+
+  let sortArray = [...resultArr].sort(function (a, b) {
+    return new Date(b.date) - new Date(a.date)
+  })
+  sort ? (resultArr = sortArray) : null
 
   return (
     <>

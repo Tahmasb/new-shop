@@ -13,6 +13,7 @@ import { useFormik } from "formik"
 import { supabase } from "../../CreateClient"
 import * as Yup from "yup"
 import * as React from "react"
+import { useSelector } from "react-redux"
 
 export default function AdminProducts(props) {
   const [snackError, setSnackError] = React.useState(false)
@@ -20,7 +21,7 @@ export default function AdminProducts(props) {
   const URL =
     /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i
 
-  const itemValue = JSON.parse(window.localStorage.getItem("all-categorys"))
+  const itemValue = useSelector((state) => state.products.categories)
   const formik = useFormik({
     initialValues: {
       img: "",
@@ -64,10 +65,9 @@ export default function AdminProducts(props) {
     )[0] || { categoryId: "" }
     formik.setFieldValue("categoryId", test.categoryId)
   }, [formik.values.categoryName])
-  const newArrayOfObj = itemValue.map(({ categoryName: label, ...rest }) => ({
-    label,
-    ...rest,
-  }))
+
+  const option = []
+  itemValue.map((item) => option.push(item.categoryName))
   return (
     <>
       <Modal open={props.openModal} onClose={() => props.setOpenModal(false)}>
@@ -125,11 +125,11 @@ export default function AdminProducts(props) {
             <Autocomplete
               disablePortal
               name="categoryName"
-              options={newArrayOfObj}
+              options={option}
               onChange={(value, value2) => {
-                formik.setFieldValue("categoryName", value2.label)
+                formik.setFieldValue("categoryName", value2)
               }}
-              freeSolo={true}
+              // freeSolo={true}
               renderInput={(params) => (
                 <TextField
                   {...params}

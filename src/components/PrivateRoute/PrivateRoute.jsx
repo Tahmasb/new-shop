@@ -1,11 +1,9 @@
-import { useContext } from "react"
-import ProductsContext from "../../context/ProductContext"
 import "./privateRoute.css"
 import { Helmet } from "react-helmet-async"
 import { Divider, Grid, Typography } from "@mui/material"
 import { Link, Navigate, NavLink, Outlet } from "react-router-dom"
+import { getCookie } from "../../utils"
 export default function PrivateRoute({ children }) {
-  const context = useContext(ProductsContext)
   return (
     <Grid>
       <Helmet>
@@ -49,7 +47,11 @@ export default function PrivateRoute({ children }) {
           بازگشت به سایت
         </Link>
       </Grid>
-      {context.isUserLogin ? <> {children} </> : <Navigate to={"/"} />}
+      {Boolean(getCookie("user-email")) ? (
+        <> {children} </>
+      ) : (
+        <Navigate to={"/"} />
+      )}
       <Outlet />
     </Grid>
   )

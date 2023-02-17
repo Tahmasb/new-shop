@@ -1,15 +1,18 @@
 @font-face {
   font-family: "IRANSansWebFaNum";
   src: url("./assets/font/IRANSansWebFaNum.ttf");
+  font-display: block;
 }
 
 @font-face {
   font-family: "vazir";
   src: url("./assets/font/Vazir.ttf");
+  font-display: block;
 }
 @font-face {
   font-family: "test";
   src: url("./assets/font/IranNastaliq.ttf");
+  font-display: block;
 }
 
 * {

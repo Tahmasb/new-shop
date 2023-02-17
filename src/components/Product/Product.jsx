@@ -2,15 +2,17 @@ import { Grid, Card, CardContent, CardMedia, Typography } from "@mui/material"
 
 import { BsStar } from "react-icons/bs"
 import { motion } from "framer-motion"
-// import dish from "./../../assets/img/dish.jpg"
 import { Link } from "react-router-dom"
 import { formatCurrency } from "./../../utils"
 import "./product.css"
 import React from "react"
+import { useSelector } from "react-redux"
 export default function Product(props) {
   let [state, setState] = React.useState(false)
   let rows = []
-  JSON.parse(window.localStorage.getItem("all-products")).map((product) => {
+  let allProducts = useSelector((state) => state.products.products)
+
+  allProducts.map((product) => {
     if (product.categoryName === props.categoryName) rows.push(product)
     else if (product.title === props.productTitle) rows.push(product)
     else null

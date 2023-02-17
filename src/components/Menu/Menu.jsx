@@ -8,11 +8,11 @@ import {
 } from "@mui/material"
 import { FcExpand } from "react-icons/fc"
 import "./menu.css"
-import { useTheme } from "@mui/material/styles"
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
 export default function Menu(props) {
-  const allCategorys = JSON.parse(window.localStorage.getItem("all-categorys"))
-  const allProducts = JSON.parse(window.localStorage.getItem("all-products"))
+  const allCategorys = useSelector((state) => state.products.categories)
+  const allProducts = useSelector((state) => state.products.products)
   const [expanded, setExpanded] = React.useState(allCategorys[0].categoryId)
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false)

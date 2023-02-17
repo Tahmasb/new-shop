@@ -1,20 +1,20 @@
+import {
+  deleteNextList,
+  addNextList,
+  deleteFavorite,
+  deleteCart,
+} from "./../../store/features/productsSlice"
+import { useSelector, useDispatch } from "react-redux"
 import { CardMedia, Grid, Typography, Box } from "@mui/material"
 import Tab from "@mui/material/Tab"
 import TabContext from "@mui/lab/TabContext"
 import TabList from "@mui/lab/TabList"
 import TabPanel from "@mui/lab/TabPanel"
-import { useContext, useEffect } from "react"
-import { ProductsContext, CartTemplate } from ".."
+import { CartTemplate } from ".."
 import styles from "./cart.module.css"
-// import emptyCart from "./../../assets/img/empty-cart.png"
 import { styled } from "@mui/system"
 import React from "react"
-import {
-  formatCurrency,
-  removeFavorite,
-  removeProduct,
-  removeNextList,
-} from "./../../utils"
+import { formatCurrency } from "./../../utils"
 import { useNavigate } from "react-router-dom"
 import { BsArrowLeft } from "react-icons/bs"
 
@@ -30,22 +30,20 @@ const GridCus2 = styled(Grid)`
   margin-bottom: 1.2rem;
 `
 export default function Cart() {
+  let favoriteItems = useSelector((state) => state.products.favorites)
+  let nextListItems = useSelector((state) => state.products.nextList)
+  let cartItems = useSelector((state) => state.products.cartItems)
+  const dispatch = useDispatch()
   const [tabNum, setTabNum] = React.useState("1")
   const handleChange = (event, newValue) => {
     setTabNum(newValue)
   }
   const [accessCheckOut] = React.useState(true)
-  const context = useContext(ProductsContext)
-  const localStorageCart = JSON.parse(window.localStorage.getItem("cart-items"))
-  useEffect(() => context.setCartItems(localStorageCart || []), [])
-  const cartProps = { type: "اضافه کن", func: removeProduct, num: "عدد" }
-  const favoriteProps = { type: "برو تو سبد", func: removeFavorite, num: "" }
-  const nextListProps = { type: "برو تو سبد", func: removeNextList, num: "" }
+  const cartProps = { type: "اضافه کن", func: deleteCart, num: "عدد" }
+  const favoriteProps = { type: "برو تو سبد", func: deleteFavorite, num: "" }
+  const nextListProps = { type: "برو تو سبد", func: deleteNextList, num: "" }
   const navigate = useNavigate()
-  let numNextList = context.nextList.length
-  const allPrice = context.cartItems.reduce((a, c) => a + c.price * c.count, 0)
-  let numFavoriteItems = context.favorite.length
-
+  const allPrice = cartItems.reduce((a, c) => a + c.price * c.count, 0)
   return (
     <>
       <TabContext value={tabNum}>
@@ -56,12 +54,12 @@ export default function Cart() {
           }}
         >
           <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label={`سبدخرید   ${cartItems.length || ""}`} value="1" />
+            <Tab label={`خرید بعدی  ${nextListItems.length || ""}`} value="2" />
             <Tab
-              label={`سبدخرید   ${context.cartItems.length || ""}`}
-              value="1"
+              label={`علاقه‌مندی‌ها  ${favoriteItems.length || ""}`}
+              value="3"
             />
-            <Tab label={`خرید بعدی  ${numNextList || ""}`} value="2" />
-            <Tab label={`علاقه‌مندی‌ها  ${numFavoriteItems || ""}`} value="3" />
           </TabList>
         </Box>
         <TabPanel sx={{ p: "0px" }} value="1">
@@ -69,10 +67,10 @@ export default function Cart() {
             position={"relative"}
             sx={{ width: { xs: "100%", md: "70%", lg: "60%" } }}
           >
-            {(context.cartItems.length || 0) > 0 ? (
+            {(cartItems.length || 0) > 0 ? (
               <>
                 <Grid mb={12}>
-                  {context.cartItems.map((item, index) => (
+                  {cartItems.map((item, index) => (
                     <CartTemplate
                       info={cartProps}
                       key={index}
@@ -118,9 +116,9 @@ export default function Cart() {
         </TabPanel>
         <TabPanel sx={{ p: "0px" }} value="2">
           {" "}
-          {numNextList ? (
+          {nextListItems.length ? (
             <GridCus2 sx={{ width: { xs: "100%", md: "70%", lg: "60%" } }}>
-              {context.nextList.map((item, index) => (
+              {nextListItems.map((item, index) => (
                 <CartTemplate
                   info={nextListProps}
                   key={index}
@@ -139,9 +137,9 @@ export default function Cart() {
           )}
         </TabPanel>
         <TabPanel sx={{ p: "0px" }} value="3">
-          {numFavoriteItems ? (
+          {favoriteItems.length ? (
             <GridCus2 sx={{ width: { xs: "100%", md: "70%", lg: "60%" } }}>
-              {context.favorite.map((item, index) => (
+              {favoriteItems.map((item, index) => (
                 <CartTemplate
                   info={favoriteProps}
                   key={index}

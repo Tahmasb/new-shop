@@ -18,6 +18,12 @@ export default function adminProducts() {
   const [deleteId, setDeleteId] = React.useState(null)
   const [openModalDelete, setOpenModalDelete] = React.useState(false)
   const [editSnack, setEditSnack] = React.useState(false)
+
+  async function fetchProducts() {
+    let { data } = await supabase.from("products").select("*")
+    setRows(data)
+    return data
+  }
   React.useEffect(() => {
     fetchProducts()
     window.scrollTo(0, 0)
@@ -45,11 +51,6 @@ export default function adminProducts() {
     setEditSnack(true)
   }
 
-  async function fetchProducts() {
-    let { data } = await supabase.from("products").select("*")
-    setRows(data)
-    return data
-  }
   if (rows === null)
     return (
       <div className="error-conection">لطفا اتصال اینترنت را بررسی کنید</div>

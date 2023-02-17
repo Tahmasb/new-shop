@@ -20,8 +20,8 @@ import React from "react"
 import { formatCurrency } from "../../utils"
 import { DateObject } from "react-multi-date-picker"
 export default function AdminOrderDone(props) {
-  async function updateOrder(orderId) {
-    const { data, error } = await supabase
+  const updateOrder = async (orderId) => {
+    const { error } = await supabase
       .from("orders")
       .update({ delivered: true })
       .eq("id", orderId)
@@ -123,8 +123,8 @@ export default function AdminOrderDone(props) {
         {!props.customOrder.delivered ? (
           <Grid display="flex" justifyContent="center" py={2}>
             <Button
-              onClick={() => {
-                updateOrder(props.customOrder.id)
+              onClick={async () => {
+                await updateOrder(props.customOrder.id)
                 props.closeModal(false)
               }}
               variant="contained"
