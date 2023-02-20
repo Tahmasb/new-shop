@@ -17,3 +17,4 @@ const getCategories = createAsyncThunk(
 )
 
 export { getProducts, getCategories }
+//  change categorys to categories

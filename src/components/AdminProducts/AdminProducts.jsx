@@ -159,7 +159,10 @@ export default function adminProducts() {
           />
           <Typography textAlign={"center"}>
             مطمئنی میخای
-            <span style={{ color: "red", fontSize: "1rem" }}>{deleteItem}</span>
+            <span style={{ color: "red", fontSize: "1rem" }}>
+              {" "}
+              {deleteItem}{" "}
+            </span>
             حذفش کنی؟
           </Typography>
           <Grid display="flex" justifyContent={"center"} columnGap={8}>

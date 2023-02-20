@@ -35,6 +35,7 @@ export default function ProductDetails() {
   const dispatch = useDispatch()
   let allProducts = useSelector((state) => state.products.products)
   let allFavorites = useSelector((state) => state.products.favorites)
+  let allNextLists = useSelector((state) => state.products.nextList)
 
   let cartItems = useSelector((state) => state.products.cartItems)
   const params = useParams()
@@ -55,6 +56,9 @@ export default function ProductDetails() {
   let [count, addCount, minusCount] = useCounter(result)
   let [isFavorite, setIsFavorite] = useState(
     allFavorites.find((product) => product.uniqueId === selectProduct.uniqueId)
+  )
+  let [isNextList, setIsNextList] = useState(
+    allNextLists.find((product) => product.uniqueId === selectProduct.uniqueId)
   )
 
   // snack state
@@ -119,11 +123,12 @@ export default function ProductDetails() {
                 } else {
                   dispatch(deleteFavorite(selectProduct.uniqueId))
                   setIsFavorite(!isFavorite)
+                  setOpenSnackFavorite(true)
                 }
               }}
             >
               <Checkbox
-                sx={{ px: "2px" }}
+                sx={{ px: "6px" }}
                 checked={Boolean(isFavorite)}
                 icon={<MdOutlineFavoriteBorder style={{ color: "#448fda" }} />}
                 checkedIcon={<MdOutlineFavorite style={{ color: "red" }} />}
@@ -142,11 +147,23 @@ export default function ProductDetails() {
           <Tooltip placement="top" title="اضافه کردن به لیست خرید بعدی">
             <Link
               onClick={() => {
-                setOpenSnackAddList(true)
-                dispatch(addNextList(selectProduct))
+                if (!isNextList) {
+                  setIsNextList(!isNextList)
+                  dispatch(addNextList(selectProduct))
+                  setOpenSnackAddList(true)
+                } else {
+                  setIsNextList(!isNextList)
+                  dispatch(deleteNextList(selectProduct.uniqueId))
+                  setOpenSnackAddList(true)
+                }
               }}
             >
-              <BiMessageSquareAdd />
+              <Checkbox
+                sx={{ px: "6px" }}
+                checked={Boolean(isNextList)}
+                icon={<BiMessageSquareAdd style={{ color: "#1976d2" }} />}
+                checkedIcon={<BiMessageSquareAdd style={{ color: "green" }} />}
+              />
             </Link>
           </Tooltip>
         </Grid>
@@ -245,18 +262,25 @@ export default function ProductDetails() {
           setOpenSnackFavorite(false)
         }}
       >
-        <Alert severity="success">به علاقه مندی‌هات اضافه شد</Alert>
+        <Alert severity="success">
+          {isFavorite
+            ? "به علاقه مندی‌هات اضافه شد"
+            : "از علاقه‌مندی‌ها حذف شد"}
+        </Alert>
       </Snackbar>
       <Snackbar
         autoHideDuration={3000}
-        message="به لیست خرید بعدیت اضافه شد"
         open={openSnackAddList}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         onClose={() => {
           setOpenSnackAddList(false)
         }}
       >
-        <Alert severity="success">به لیست خرید بعدی اضافه شد</Alert>
+        <Alert severity="success">
+          {isNextList
+            ? "به لیست خرید بعدی اضافه شد"
+            : "از لیست خرید بعدی حذف شد"}
+        </Alert>
       </Snackbar>
       <Snackbar
         autoHideDuration={3000}
