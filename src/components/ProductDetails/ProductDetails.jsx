@@ -128,7 +128,7 @@ export default function ProductDetails() {
               }}
             >
               <Checkbox
-                sx={{ px: "6px" }}
+                sx={{ px: "0px" }}
                 checked={Boolean(isFavorite)}
                 icon={<MdOutlineFavoriteBorder style={{ color: "#448fda" }} />}
                 checkedIcon={<MdOutlineFavorite style={{ color: "red" }} />}
@@ -159,7 +159,7 @@ export default function ProductDetails() {
               }}
             >
               <Checkbox
-                sx={{ px: "6px" }}
+                sx={{ px: "0px" }}
                 checked={Boolean(isNextList)}
                 icon={<BiMessageSquareAdd style={{ color: "#1976d2" }} />}
                 checkedIcon={<BiMessageSquareAdd style={{ color: "green" }} />}
