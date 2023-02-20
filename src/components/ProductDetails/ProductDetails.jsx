@@ -215,7 +215,11 @@ export default function ProductDetails() {
                 addCount()
                 dispatch(addCart(selectProduct))
               }}
-              sx={{ display: count ? "none" : "block" }}
+              sx={{
+                display: count ? "none" : "block",
+                bgcolor: "#ff5c3c",
+                "&:hover": { backgroundColor: "#e04424" },
+              }}
             >
               افزودن به سبد
             </Button>
