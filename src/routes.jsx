@@ -5,7 +5,6 @@ import {
   ProductInfo,
   PrivateRoute,
   AdminOrders,
-  Test,
   AdminProducts,
   Checkout,
   CustomCategory,
@@ -16,7 +15,6 @@ const routes = [
   { path: "/category/:categoryID", element: <CustomCategory /> },
   { path: "product/:productID", element: <ProductInfo /> },
   { path: "/cart", element: <CartPage /> },
-  { path: "/test", element: <Test /> },
   { path: "/checkout", element: <Checkout /> },
   {
     path: "/admin/*",

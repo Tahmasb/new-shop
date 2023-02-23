@@ -1,6 +1,6 @@
 import { getProducts, getCategories } from "../../store/thunks/productsThunks"
 import { Grid, Tooltip } from "@mui/material"
-import { Product, Skeleton, ScrollToTop } from ".."
+import { Product, Skeleton, ScrollToTop, Swiper } from ".."
 import React from "react"
 import { MdArrowLeft } from "react-icons/md"
 import { Link } from "react-router-dom"
@@ -23,6 +23,7 @@ export default function Categorys() {
   }
   return (
     <>
+      <Swiper />
       {loading ? (
         <Skeleton />
       ) : (
